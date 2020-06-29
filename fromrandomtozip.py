@@ -112,7 +112,7 @@ def merge_same_name():
                 shutil.move(thefile, to)
 
 
-wd = '/home/karmanyaahm/data/oldstff/random/b2019/kenston-2019/'
+wd = '/'
 div = 'c'
 
 

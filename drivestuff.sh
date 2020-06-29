@@ -1,0 +1,1 @@
+/usr/bin/rclone sync --copy-links --verbose --transfers 50 --checkers 8 --contimeout 60s --timeout 300s --retries 3 --low-level-retries 10  --progress "/home/karmanyaahm/data/oldstff/tests/" "schoolDrive:scioly_tests"
