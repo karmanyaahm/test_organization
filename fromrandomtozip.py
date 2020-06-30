@@ -26,7 +26,7 @@ def getdirs():
 
 def zipdir(path, ziph):
     # ziph is zipfile handle
-    for root, dirs, files in os.walk(path):
+    for root, _, files in os.walk(path):
         for file in files:
             ziph.write(os.path.join(root, file))
 
@@ -98,7 +98,7 @@ def sortfolder():
         for pos in com:
             files = [f for f in glob.glob(f'*',) if os.path.isfile(f)]
             for afile in files:
-                if (pos.lower() in os.path.basename(afile).lower() or similar(pos, os.path.basename(afile).lower()) >= 0.9) and not (afile.split('.')[-1] == 'zip'):
+                if (pos.lower() in os.path.basename(afile).lower() ) and not (afile.split('.')[-1] == 'zip'):
                     os.makedirs(j, exist_ok=True)
                     shutil.move(afile, j)
 
@@ -112,7 +112,7 @@ def merge_same_name():
                 shutil.move(thefile, to)
 
 
-wd = '/'
+wd = '/home/karmanyaahm/data/oldstff/random/trade03/orlando_science_school_try-2020/'
 div = 'c'
 
 

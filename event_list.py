@@ -46,7 +46,7 @@ fileslist += [
     (["microbe"], "microbe_mission", ["biology", "micro"]),
     (["invas"], "invasive_species", ["biology", "life_science"]),
     (["potions"], "potions_and_poisons", ['chemistry', 'potions']),
-    (["solar sys", "solar"], "solar_system", ["earth_science", "space"]),
+    (["solar sys", ], "solar_system", ["earth_science", "space"]),
     (["wright stuff"], "wright_stuff", ["technology", "flying"]),
     (["electric vehicle"], "electric_vehicle", ["technology", "vehicle"]),
     ([], "robot_arm", ['technology', 'robotics']),
@@ -62,6 +62,7 @@ fileslist += [
     (["tps", ], "technical_problem_solving", ['other_idk', 'tps']),
     (["compound machine"], "compound_machines", ["physics", "energy"]),
     ([], "maglev", ["technology", "vehicle"]),
+    ([],'solar_power'),
 ]
 
 # probably b
