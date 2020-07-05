@@ -62,7 +62,10 @@ fileslist += [
     (["tps", ], "technical_problem_solving", ['other_idk', 'tps']),
     (["compound machine"], "compound_machines", ["physics", "energy"]),
     ([], "maglev", ["technology", "vehicle"]),
-    ([],'solar_power'),
+    ([], 'solar_power', ['physics', 'energy']),
+    ([], 'horticulture', ['biology', 'life_sciences']),
+    ([], 'geocaching', ['other_idk', 'geocaching']),
+    ([], 'data_science', ['inquiry', 'data_science']),
 ]
 
 # probably b
@@ -138,3 +141,13 @@ if __name__ == "__main__":
 
 
 # ]
+
+
+rotations = {
+    'dynamic_planet': {
+        'glacier': [2005, 2006, 2013, 2014, 2019],
+        'ocean': [2007, 2008, 2015, 2016, 2020, 2021],
+        'tectonics': [2009, 2010, 2017, 2018],
+        'fresh_water': [2011, 2012],
+    }
+}

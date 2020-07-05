@@ -10,7 +10,7 @@ from beyond_zippedlocations import start, initvars, delempty
 from importlib import reload
 import event_list
 fileslist = event_list.fileslist
-
+similarity_conf = 0.95
 
 class EventDoesNotExist(Exception):
     pass
@@ -22,6 +22,8 @@ def similar(a, b):
 
 def getdirs():
     return [f.path for f in os.scandir('.') if f.is_dir()]
+def getfiles():
+    return [f.path for f in os.scandir('.') if f.is_file()]
 
 
 def zipdir(path, ziph):
@@ -40,7 +42,7 @@ def remove_from_string(j, vars):
 def get_real_name(string):
     for i in fileslist:
         for j in [i[1]]+i[0]:
-            if similar(j.lower(), string.lower()) >= 0.75 or j.lower() in string.lower():
+            if similar(j.lower(), string.lower()) >= similarity_conf or j.lower() in string.lower():
                 return i[1]
     raise EventDoesNotExist
 
@@ -69,7 +71,6 @@ def zipa():
         #     j = inp
         # print()
         else:
-            print(j)
             name = f'{os.path.basename(os.getcwd())}-{j}-{div}.zip'
 
             with zipfile.ZipFile(name, 'w', zipfile.ZIP_DEFLATED) as zipf:
@@ -111,26 +112,51 @@ def merge_same_name():
                 os.makedirs(to, exist_ok=True)
                 shutil.move(thefile, to)
 
+class getOutOfLoop(Exception):
+    pass
 
-wd = '/home/karmanyaahm/data/oldstff/random/trade03/orlando_science_school_try-2020/'
+name = 'kenston'
+wd = f'/home/karmanyaahm/data/oldstff/random/{name}-2018/'
 div = 'c'
-
+#(?:[0-9]|\b|_)(dd|ap)(?:[0-9]|\b|_)
 
 if __name__ == "__main__":
     os.chdir(wd)
-    for _ in range(3):
+    for _ in range(2):
         merge_same_name()
-        sortfolder()
         delempty('.')
-        pwn.pause()
-        event_list = reload(event_list)
-        fileslist = ''
-        fileslist = event_list.fileslist
-    merge_same_name()
-    delempty('.')
-    zipa()
-    pwn.pause()
-    event_list = reload(event_list)
-    fileslist = ''
-    fileslist = event_list.fileslist
-    zipa()
+
+    for _ in range(3):
+        if len([fi for fi in getfiles() if '.zip' not in fi])>0:
+            merge_same_name()
+            sortfolder()
+            delempty('.')
+
+            pwn.pause()
+
+            event_list = reload(event_list)
+            fileslist = event_list.fileslist
+        else:
+            break
+
+
+
+    try:
+        for _ in range(3):
+            event_list = reload(event_list)
+            fileslist = event_list.fileslist
+            zipa()
+
+            files = getfiles()+getdirs()
+            allzip = True
+            for i in files:
+                if '.zip' not in i:
+                    allzip &= False
+                                    
+            if allzip:    
+                break
+
+            pwn.pause()
+            
+    except getOutOfLoop: pass
+
