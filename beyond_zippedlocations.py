@@ -102,7 +102,6 @@ def main():
         initvars(i)
         move()
         dorotations()
-        pass
         symlink()
 
 

@@ -12,6 +12,12 @@ import event_list
 fileslist = event_list.fileslist
 similarity_conf = 0.95
 
+pat1 ='(?:[0-9]|\\b|_)('
+
+pat2= ')(?:[0-9]|\\b|_)'
+
+
+
 class EventDoesNotExist(Exception):
     pass
 
@@ -91,7 +97,7 @@ def rename_BorC():
         thefile = os.path.basename(thefile)
         shutil.move(thefile, thefile[:-5]+'b.zip')
 
-
+import re
 def sortfolder():
     for j in fileslist:
         com = j[0]+[j[1]]
@@ -99,7 +105,8 @@ def sortfolder():
         for pos in com:
             files = [f for f in glob.glob(f'*',) if os.path.isfile(f)]
             for afile in files:
-                if (pos.lower() in os.path.basename(afile).lower() ) and not (afile.split('.')[-1] == 'zip'):
+                pattern = pat1+pos.lower()+pat2
+                if (re.search(pattern,os.path.basename(afile),re.IGNORECASE|re.MULTILINE) ) and not (afile.split('.')[-1] == 'zip'):
                     os.makedirs(j, exist_ok=True)
                     shutil.move(afile, j)
 
@@ -116,9 +123,9 @@ class getOutOfLoop(Exception):
     pass
 
 name = 'kenston'
-wd = f'/home/karmanyaahm/data/oldstff/random/{name}-2018/'
+yr = 2018
+wd = f'/home/karmanyaahm/data/oldstff/random/{name}-{yr}/'
 div = 'c'
-#(?:[0-9]|\b|_)(dd|ap)(?:[0-9]|\b|_)
 
 if __name__ == "__main__":
     os.chdir(wd)
