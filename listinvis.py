@@ -107,8 +107,11 @@ for div in ['b', 'c']:
     og = result.get('values', [])
     print('get')
 
-    new = write
-    if new != og:
+    new = write.copy()
+    new.extend([[""]*26]*(100-len(new)))
+    new = [line+[""]*(26-len(line)) for line in new]
+
+    if write != og:
         result = spreadsheetValuesObject.update(
             spreadsheetId=spreadsheet_id, range=range_name,
             valueInputOption='RAW', body={'values':new}).execute()
@@ -116,7 +119,7 @@ for div in ['b', 'c']:
 
     print(','.join([str(i)[2:] for i in write[0][1:]]))
 
-    for line in difflib.unified_diff([','.join(line) for line in og], [','.join(line) for line in new], fromfile='old', tofile='new', lineterm='', n=0):
+    for line in difflib.unified_diff([','.join(line) for line in og], [','.join(line) for line in write], fromfile='old', tofile='new', lineterm='', n=0):
         for prefix in ('---', '+++', '@@'):
             if line.startswith(prefix):
                 break
