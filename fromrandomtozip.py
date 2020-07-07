@@ -12,10 +12,9 @@ import event_list
 fileslist = event_list.fileslist
 similarity_conf = 0.95
 
-pat1 ='(?:[0-9]|\\b|_)('
+pat1 = '(?:[0-9]|\\b|_)('
 
-pat2= ')(?:[0-9]|\\b|_)'
-
+pat2 = ')(?:[0-9]|\\b|_)'
 
 
 class EventDoesNotExist(Exception):
@@ -28,6 +27,8 @@ def similar(a, b):
 
 def getdirs():
     return [f.path for f in os.scandir('.') if f.is_dir()]
+
+
 def getfiles():
     return [f.path for f in os.scandir('.') if f.is_file()]
 
@@ -97,7 +98,7 @@ def rename_BorC():
         thefile = os.path.basename(thefile)
         shutil.move(thefile, thefile[:-5]+'b.zip')
 
-import re
+
 def sortfolder():
     for j in fileslist:
         com = j[0]+[j[1]]
@@ -106,7 +107,7 @@ def sortfolder():
             files = [f for f in glob.glob(f'*',) if os.path.isfile(f)]
             for afile in files:
                 pattern = pat1+pos.lower()+pat2
-                if (re.search(pattern,os.path.basename(afile),re.IGNORECASE|re.MULTILINE) ) and not (afile.split('.')[-1] == 'zip'):
+                if (re.search(pattern, os.path.basename(afile), re.IGNORECASE | re.MULTILINE)) and not (afile.split('.')[-1] == 'zip'):
                     os.makedirs(j, exist_ok=True)
                     shutil.move(afile, j)
 
@@ -119,8 +120,10 @@ def merge_same_name():
                 os.makedirs(to, exist_ok=True)
                 shutil.move(thefile, to)
 
+
 class getOutOfLoop(Exception):
     pass
+
 
 name = 'kenston'
 yr = 2018
@@ -134,7 +137,7 @@ if __name__ == "__main__":
         delempty('.')
 
     for _ in range(3):
-        if len([fi for fi in getfiles() if '.zip' not in fi])>0:
+        if len([fi for fi in getfiles() if '.zip' not in fi]) > 0:
             merge_same_name()
             sortfolder()
             delempty('.')
@@ -145,8 +148,6 @@ if __name__ == "__main__":
             fileslist = event_list.fileslist
         else:
             break
-
-
 
     try:
         for _ in range(3):
@@ -159,11 +160,11 @@ if __name__ == "__main__":
             for i in files:
                 if '.zip' not in i:
                     allzip &= False
-                                    
-            if allzip:    
+
+            if allzip:
                 break
 
             pwn.pause()
-            
-    except getOutOfLoop: pass
 
+    except getOutOfLoop:
+        pass

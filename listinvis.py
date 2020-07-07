@@ -43,12 +43,9 @@ def sheets_stuff():
     return service.spreadsheets().values()
 
 
-
-
 next_year = 2021
 
 spreadsheetValuesObject = sheets_stuff()
-
 
 
 start = '/home/karmanyaahm/data/oldstff/tests/bylocation/'
@@ -57,7 +54,6 @@ os.chdir(start)
 
 
 spreadsheet_id = '1EI_McY52x9RBUgShYJZFVzeEW4KCsFKS5ByjgUCFkgM'
-
 
 
 for div in ['b', 'c']:
@@ -114,7 +110,7 @@ for div in ['b', 'c']:
     if write != og:
         result = spreadsheetValuesObject.update(
             spreadsheetId=spreadsheet_id, range=range_name,
-            valueInputOption='RAW', body={'values':new}).execute()
+            valueInputOption='RAW', body={'values': new}).execute()
         print('write')
 
     print(','.join([str(i)[2:] for i in write[0][1:]]))

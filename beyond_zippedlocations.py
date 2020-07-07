@@ -3,7 +3,7 @@ import shutil
 import zipfile
 import os
 import glob
-from event_list import fileslist,rotations
+from event_list import fileslist, rotations
 
 
 start = '/home/karmanyaahm/data/oldstff/tests/'
@@ -71,11 +71,14 @@ def symlink():
 
 
 def getzips(inpdir='.'):
-    return [os.path.basename(f.path) for f in os.scandir(inpdir) if f.is_file() and os.path.basename(f.path).split('.')[1] == 'zip' ]
+    return [os.path.basename(f.path) for f in os.scandir(inpdir) if f.is_file() and os.path.basename(f.path).split('.')[1] == 'zip']
 
-def get_category_from_year(event,year):
-    for j,k in rotations[event].items():
-        if year in k: return j
+
+def get_category_from_year(event, year):
+    for j, k in rotations[event].items():
+        if year in k:
+            return j
+
 
 def dorotations():
     for event in rotations.keys():
@@ -84,17 +87,16 @@ def dorotations():
             os.chdir(todir)
             zips = getzips()
             for category in rotations[event].keys():
-                os.makedirs('by_category-'+category,exist_ok=True)
+                os.makedirs('by_category-'+category, exist_ok=True)
             for thiszip in getzips():
-                cat = 'by_category-' + get_category_from_year(event, int(thiszip.split('-')[1]))
+                cat = 'by_category-' + \
+                    get_category_from_year(event, int(thiszip.split('-')[1]))
                 try:
-                    os.symlink('../'+thiszip,cat+'/'+thiszip)
+                    os.symlink('../'+thiszip, cat+'/'+thiszip)
                 except FileExistsError:
                     pass
-            
+
             os.chdir('../..')
-
-
 
 
 def main():
