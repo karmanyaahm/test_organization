@@ -190,24 +190,10 @@ example_yaml = '''
 
 
 if __name__ == "__main__":
-    cat = {}
-    for i in fileslist:
-        cat[i[2][0]] = {}
-    for i in fileslist:
-        cat[i[2][0]][i[2][1]] = {}
-    for i in fileslist:
-        t = cat[i[2][0]][i[2][1]][i[1]] = {
 
-        }
-        if i[0] != []:
-            t['ids'] = i[0]
-        if i[1] in rotations.keys():
-            t['rotations'] = rotations[i[1]]
-        else:
-            t['rotations'] = False
+    cat = load(open('event_list.yml','r').read())
+    print('done')
 
-    print(dump(cat))
-    open('event_list.yml','w').write(dump(cat))
     
 
 

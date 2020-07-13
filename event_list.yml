@@ -2,75 +2,62 @@ biology:
   bioprocess_idk_where_this_should_go:
     bioprocess:
       ids:
-      - bio-process
+        - bio-process
       rotations: false
   bird:
     ornithology:
       ids:
-      - ornith
+        - ornith
       rotations: false
   disease:
     disease_detectives:
       ids:
-      - disease
-      - dd
+        - disease
+        - dd
       rotations: false
   environment:
     water_quality:
       ids:
-      - water
+        - water
       rotations: false
   genetics:
     designer_genes:
       ids:
-      - designer
-      - genes
+        - designer
+        - genes
       rotations: false
     heredity:
       rotations: false
   human:
     anatomy_and_physiology:
       ids:
-      - anat
-      - a and p
-      - anatom
-      - a_p
-      - ap
+        - anat
+        - a and p
+        - anatom
+        - a_p
+        - ap
       rotations:
-        cardiovascular-integumentary-immune:
-        - 2015
-        cardiovascular-lymphatic-excretory:
-        - 2019
-        circulatory-nervous-?:
-        - 2008
-        digestive-respiratory-excretory(c):
-        - 2012
-        integumentary-Nervous-immune(c):
-        - 2014
-        muscular-skeletal-endocrine(c):
-        - 2010
-        nervous-digestive-excretory(c):
-        - 2013
-        nervous-sense_organs-endocrine:
-        - 2017
-        respiratory-digestive-immune:
-        - 2018
-        respiratory-muscular-endocrine(c):
-        - 2011
-        skeletal-circulatory-?:
-        - 2009
-        skeletal-muscular-integumentary:
-        - 2016
-        - 2020
+        cardiovascular-integumentary-immune: [2015]
+        cardiovascular-lymphatic-excretory: [2019]
+        circulatory-nervous-?: [2008]
+        digestive-respiratory-excretory(c): [2012]
+        integumentary-Nervous-immune(c): [2014]
+        muscular-skeletal-endocrine(c): [2010]
+        nervous-digestive-excretory(c): [2013]
+        nervous-sense_organs-endocrine: [2017]
+        respiratory-digestive-immune: [2018]
+        respiratory-muscular-endocrine(c): [2011]
+        skeletal-circulatory-?: [2009]
+        skeletal-muscular-integumentary: [2016, 2020]
     neuroscience:
       ids:
-      - neursocience
-      - neuorscience
+        - neursocience
+        - neuorscience
       rotations: false
   life_science:
     ecology:
       ids:
-      - ecology
+        - ecology
       rotations: false
     entomology:
       rotations: false
@@ -78,11 +65,11 @@ biology:
       rotations: false
     green_generation:
       ids:
-      - green
+        - green
       rotations: false
     invasive_species:
       ids:
-      - invas
+        - invas
       rotations: false
   life_sciences:
     horticulture:
@@ -92,69 +79,69 @@ biology:
   micro:
     cell_biology:
       ids:
-      - cell bio
-      - cellbio
+        - cell bio
+        - cellbio
       rotations: false
     microbe_mission:
       ids:
-      - microbe
+        - microbe
       rotations: false
   plant:
     botany:
       ids:
-      - botany
+        - botany
       rotations: false
   reptile:
     herpetology:
       ids:
-      - herpeto
+        - herpeto
       rotations: false
 chemistry:
   chemistry:
     chemistry_lab:
       ids:
-      - chem_lab
-      - chem lab
-      - chemlab
-      - chemistry lab
+        - chem_lab
+        - chem lab
+        - chemlab
+        - chemistry lab
       rotations: false
   food:
     food_science:
       ids:
-      - foodsci
+        - foodsci
       rotations: false
   forensics:
     crime_busters:
       ids:
-      - crime
+        - crime
       rotations: false
     forensics:
       ids:
-      - forensic
+        - forensic
       rotations: false
   materials:
     material_science:
       ids:
-      - material
-      - matsci
-      - materials
+        - material
+        - matsci
+        - materials
       rotations: false
   potions:
     potions_and_poisons:
       ids:
-      - potions
+        - potions
       rotations: false
   protein:
     protein_modelling:
       ids:
-      - protein
-      - prot mod
+        - protein
+        - prot mod
       rotations: false
 dumb:
   meme:
     lean_mean_meme_machine:
       ids:
-      - meme
+        - meme
       rotations: false
   movies:
     geek_speak:
@@ -162,92 +149,75 @@ dumb:
   pokemon:
     pokemon_trivia:
       ids:
-      - pokemon
+        - pokemon
       rotations: false
 earth_science:
   atmosphere:
     meteorology:
       ids:
-      - meteor
+        - meteor
       rotations: false
     remote_sensing:
       ids:
-      - remote
+        - remote
       rotations: false
   dynamic_planet:
     dynamic_planet:
       ids:
-      - dynamic planet
-      - oceanography
+        - dynamic planet
+        - oceanography
       rotations:
-        fresh_water:
-        - 2011
-        - 2012
-        glacier:
-        - 2005
-        - 2006
-        - 2013
-        - 2014
-        - 2019
-        ocean:
-        - 2007
-        - 2008
-        - 2015
-        - 2016
-        - 2020
-        - 2021
-        tectonics:
-        - 2009
-        - 2010
-        - 2017
-        - 2018
+        fresh_water: [2011, 2012]
+        glacier: [2005, 2006, 2013, 2014, 2019]
+        ocean: [2007, 2008, 2015, 2016, 2020, 2021]
+        tectonics: [2009, 2010, 2017, 2018]
   fossil:
     fossils:
       ids:
-      - fossil
+        - fossil
       rotations: false
   geology:
     geologic_mapping:
       ids:
-      - mapping
-      - geo map
+        - mapping
+        - geo map
       rotations: false
   hydrosphere:
     hydrogeology:
       ids:
-      - hydrogeo
-      - hydogeolo
+        - hydrogeo
+        - hydogeolo
       rotations: false
   mapping:
     road_scholar:
       ids:
-      - road
+        - road
       rotations: false
   rocks:
     rocks_and_minerals:
       ids:
-      - rocks_and_mineral
-      - mineral
-      - rocks
+        - rocks_and_mineral
+        - mineral
+        - rocks
       rotations: false
   space:
     astronomy:
       ids:
-      - astron
+        - astron
       rotations: false
     reach_for_the_stars:
       ids:
-      - stars
+        - stars
       rotations: false
     solar_system:
       ids:
-      - solar sys
+        - solar sys
       rotations: false
 inquiry:
   cryptography:
     codebusters:
       ids:
-      - codeb
+        - codeb
       rotations: false
   data_science:
     data_science:
@@ -255,43 +225,43 @@ inquiry:
   experimental_design:
     experimental_design:
       ids:
-      - exper
-      - expd
-      - exdes
-      - exp d
-      - xpd
+        - exper
+        - expd
+        - exdes
+        - exp d
+        - xpd
       rotations: false
   fermi:
     fermi_questions:
       ids:
-      - fermi
+        - fermi
       rotations: false
   structure:
     duct_tape_challenge:
       rotations: false
     mystery_architecture:
       ids:
-      - mystery
-      - architecture
+        - mystery
+        - architecture
       rotations: false
   timekeeping:
     its_about_time:
       ids:
-      - it_s about time
-      - about time
+        - it_s about time
+        - about time
       rotations: false
   widi:
     write_it_do_it:
       ids:
-      - widi
-      - write_it
+        - widi
+        - write_it
       rotations: false
 other_idk:
   fast_facts:
     fast_facts:
       ids:
-      - fastfacts
-      - fast facts
+        - fastfacts
+        - fast facts
       rotations: false
   geocaching:
     geocaching:
@@ -302,12 +272,12 @@ other_idk:
   picture:
     picture_this:
       ids:
-      - picture
+        - picture
       rotations: false
   quiz_bowl:
     science_quiz_bowl:
       ids:
-      - bowl
+        - bowl
       rotations: false
   roller_coaster:
     roller_coaster:
@@ -315,16 +285,16 @@ other_idk:
   score:
     score_report:
       ids:
-      - score
-      - result
-      - scoring
-      - rank
-      - scores
+        - score
+        - result
+        - scoring
+        - rank
+        - scores
       rotations: false
   tps:
     technical_problem_solving:
       ids:
-      - tps
+        - tps
       rotations: false
   word:
     science_word:
@@ -333,7 +303,7 @@ physics:
   circuit:
     circuit_lab:
       ids:
-      - circuit
+        - circuit
       rotations: false
   density:
     density_lab:
@@ -341,27 +311,27 @@ physics:
   energy:
     compound_machines:
       ids:
-      - compound machine
+        - compound machine
       rotations: false
     machines:
       ids:
-      - machines
+        - machines
       rotations: false
     solar_power:
       rotations: false
     thermodynamics:
       ids:
-      - thermo
+        - thermo
       rotations: false
   light:
     optics:
       ids:
-      - optics
+        - optics
       rotations: false
   sound:
     sounds_of_music:
       ids:
-      - sound
+        - sound
       rotations: false
   waves:
     crave the wave:
@@ -371,7 +341,7 @@ physics:
   wind:
     wind_power:
       ids:
-      - wind
+        - wind
       rotations: false
 technology:
   computer:
@@ -379,34 +349,34 @@ technology:
       rotations: false
     game_on:
       ids:
-      - game
+        - game
       rotations: false
     source_code:
       rotations: false
   engineering:
     detector_building:
       ids:
-      - detector
+        - detector
       rotations: false
   flying:
     air_trajectory:
       rotations: false
     elastic_launch_glider:
       ids:
-      - elglider
+        - elglider
       rotations: false
     helicopters:
       ids:
-      - helicopters
+        - helicopters
       rotations: false
     ping_pong_parachute:
       ids:
-      - ppp
-      - parachute
+        - ppp
+        - parachute
       rotations: false
     wright_stuff:
       ids:
-      - wright stuff
+        - wright stuff
       rotations: false
   robotics:
     robot_arm:
@@ -414,36 +384,36 @@ technology:
   rube_goldberg:
     mission_possible:
       ids:
-      - mission possible
-      - possible
+        - mission possible
+        - possible
       rotations: false
   structure:
     boomilever:
       ids:
-      - boomilever
+        - boomilever
       rotations: false
     bridge_building:
       rotations: false
     towers:
       ids:
-      - towers
+        - towers
       rotations: false
   vehicle:
     battery_buggy:
       rotations: false
     electric_vehicle:
       ids:
-      - electric vehicle
+        - electric vehicle
       rotations: false
     gravity_vehicle:
       rotations: false
     hovercraft:
       ids:
-      - hover
+        - hover
       rotations: false
     maglev:
       rotations: false
     mousetrap_vehicle:
       ids:
-      - mouse
+        - mouse
       rotations: false
