@@ -1,3 +1,5 @@
+from yaml import dump, load
+import toml
 fileslist = [(["score", "result", "scoring", "rank", "scores"],
               "score_report", ["other_idk", "score"],)]
 
@@ -122,14 +124,6 @@ fileslist += [
 ]
 
 
-for n, i in enumerate(fileslist):
-    i = list(i)
-    i[0] = list(set(list(i[0] + [i[1]] + [i[1].replace("_", " "),
-                                          i[1].replace("_", ""), i[1].replace(" ", "")])))
-    fileslist[n] = i
-if __name__ == "__main__":
-    print(len(fileslist))
-
 # anatomy people names
 # fileslist=[
 #     ([],'ohwell'),
@@ -166,3 +160,59 @@ rotations = {
         'circulatory-nervous-?': [2008],
     },
 }
+
+example_toml = '''
+[[biology]]
+
+    [[biology.human]]
+        name = "anatomy_and_physiology"
+        ids = [
+            "a_p",
+            "anatomy",
+        ]
+        rotate = true
+        [[biology.human.anatomy_and_physiology.rotations]]
+            "skeletal-muscular-integumentary" = [2016, 2020]
+    
+'''
+
+example_yaml = '''
+- biology:
+    - human:
+        - name: anatomy_and_physiology
+          ids:
+            - a_p
+            - anatomy
+          rotate: True
+          rotations:
+            - skeletal-muscular-integumentary:  [2016, 2020]
+'''
+
+
+if __name__ == "__main__":
+    cat = {}
+    for i in fileslist:
+        cat[i[2][0]] = {}
+    for i in fileslist:
+        cat[i[2][0]][i[2][1]] = {}
+    for i in fileslist:
+        t = cat[i[2][0]][i[2][1]][i[1]] = {
+
+        }
+        if i[0] != []:
+            t['ids'] = i[0]
+        if i[1] in rotations.keys():
+            t['rotations'] = rotations[i[1]]
+        else:
+            t['rotations'] = False
+
+    print(dump(cat))
+    open('event_list.yml','w').write(dump(cat))
+    
+
+
+for n, i in enumerate(fileslist):
+    i = list(i)
+    i[0] = list(set(list(i[0] + [i[1]] + [i[1].replace("_", " "),
+                                          i[1].replace("_", ""), i[1].replace(" ", "")])))
+    fileslist[n] = i
