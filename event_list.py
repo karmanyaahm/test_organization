@@ -188,12 +188,24 @@ example_yaml = '''
             - skeletal-muscular-integumentary:  [2016, 2020]
 '''
 
+def recursive_items(dictionary,path='.'):
+    for key, value in dictionary.items():
+        if type(value) is dict:
+            newpath = path+'/'+key
+            if 'rotations' in value.keys():
+                yield (value,newpath)
+            else:
+                yield from recursive_items(value,newpath)
+
 
 if __name__ == "__main__":
 
     cat = load(open('event_list.yml','r').read())
-    print('done')
-
+    for i in list(recursive_items(cat)):
+        print(i)
+    print(len(list(recursive_items(cat))))
+    print(len(fileslist))
+    pass
     
 
 
