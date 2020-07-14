@@ -1,3 +1,48 @@
+other_idk:
+  score:
+    score_report:
+      ids:
+        - score
+        - result
+        - scoring
+        - rank
+        - scores
+      rotations: false
+  fast_facts:
+    fast_facts:
+      ids:
+        - fastfacts
+        - fast facts
+      rotations: false
+  geocaching:
+    geocaching:
+      rotations: false
+  pentathalon:
+    pentathalon:
+      rotations: false
+  picture:
+    picture_this:
+      ids:
+        - picture
+      rotations: false
+  quiz_bowl:
+    science_quiz_bowl:
+      ids:
+        - bowl
+      rotations: false
+  roller_coaster:
+    roller_coaster:
+      rotations: false
+
+  tps:
+    technical_problem_solving:
+      ids:
+        - tps
+      rotations: false
+  word:
+    science_word:
+      rotations: false
+
 biology:
   bioprocess_idk_where_this_should_go:
     bioprocess:
@@ -256,49 +301,7 @@ inquiry:
         - widi
         - write_it
       rotations: false
-other_idk:
-  fast_facts:
-    fast_facts:
-      ids:
-        - fastfacts
-        - fast facts
-      rotations: false
-  geocaching:
-    geocaching:
-      rotations: false
-  pentathalon:
-    pentathalon:
-      rotations: false
-  picture:
-    picture_this:
-      ids:
-        - picture
-      rotations: false
-  quiz_bowl:
-    science_quiz_bowl:
-      ids:
-        - bowl
-      rotations: false
-  roller_coaster:
-    roller_coaster:
-      rotations: false
-  score:
-    score_report:
-      ids:
-        - score
-        - result
-        - scoring
-        - rank
-        - scores
-      rotations: false
-  tps:
-    technical_problem_solving:
-      ids:
-        - tps
-      rotations: false
-  word:
-    science_word:
-      rotations: false
+
 physics:
   circuit:
     circuit_lab:
