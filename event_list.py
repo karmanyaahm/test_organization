@@ -203,7 +203,7 @@ fileslist = []
 rotations = {}
 
 if __name__ == "__main__":
-
+    global cat
     cat = load(open('event_list.yml', 'r').read())
     for i, j in events_from_dict(cat):
         dirs = j.split('/')[1:]
