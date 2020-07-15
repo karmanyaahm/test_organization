@@ -10,6 +10,7 @@ import os
 import shutil
 import difflib
 from fromrandomtozip import getdirs
+from event_list import blocked
 
 
 def sheets_stuff():
@@ -71,7 +72,6 @@ for div in ['b', 'c']:
 
     invis = sorted(list(set([d[0] for d in dirs])))
     # get list of unique invis by name only
-
     write = []
 
     for i in invis:
@@ -81,6 +81,18 @@ for div in ['b', 'c']:
                 arr.append(d[1])
         write.append([i, set(arr)])
     # getting list of years for each invi
+
+    # new code
+
+    for event, years in blocked[div].items():
+        if event in invis:
+            for k in write:
+                if k[0] == event:
+                    k[1] = k[1]-years
+
+    for i in write:
+        if len(i[1]) == 0:
+            write.remove(i)
 
     for n, w in enumerate(write):
         arr = []
