@@ -78,7 +78,7 @@ for div in ['b', 'c']:
         arr = []
         for d in dirs:
             if d[0] == i:
-                arr.append(d[1])
+                arr.append(int(d[1]))
         write.append([i, set(arr)])
     # getting list of years for each invi
 
@@ -97,7 +97,7 @@ for div in ['b', 'c']:
     for n, w in enumerate(write):
         arr = []
         for i in range(oldest, next_year):
-            arr.append(1 if str(i) in w[1] else 0)
+            arr.append(1 if i in w[1] else 0)
         write[n] = [w[0]]+list(arr)
     # get list of years in order
 

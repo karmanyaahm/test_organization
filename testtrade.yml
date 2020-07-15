@@ -1,5 +1,48 @@
-c:
-  testexchange: [2020]
+#the whole file should be lowercase
 
-b:
-  testexchange: [2020]
+public:
+  c:
+    testexchange: [2020]
+    mit: [2019, 2020]
+    2019:
+      - dartmouth
+      - ggso
+      - liso
+      - princeton
+      - ssss
+      - uga
+      - umich
+      - mit
+      - uta
+    2020:
+      - golden_gate
+      - princeton
+      - ssss
+      - uga
+      - umso
+      - ut_austin
+      - lambert
+
+  b:
+    testexchange: [2020]
+    2019:
+      - cobra
+      - colt
+      - garnet
+      - liso
+      - uga
+      - uta
+  bc:
+    ufso: [2019, 2020]
+
+not_trade:
+  c:
+    testexchange: [2020]
+
+  b:
+    testexchange: [2020]
+    john_hopkins: [2020]
+
+  bc:
+    2020:
+      - uchicago
