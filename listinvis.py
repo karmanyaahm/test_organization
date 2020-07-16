@@ -10,7 +10,8 @@ import os
 import shutil
 import difflib
 from fromrandomtozip import getdirs
-from event_list import blocked
+from event_list import get_blocked
+blocked = get_blocked()
 
 
 def sheets_stuff():
@@ -90,7 +91,7 @@ for div in ['b', 'c']:
                 if k[0] == event:
                     k[1] = k[1]-years
 
-    for i in write:
+    for i in write.copy():
         if len(i[1]) == 0:
             write.remove(i)
 

@@ -8,8 +8,11 @@ import os
 import re
 from beyond_zippedlocations import start, initvars, delempty
 from importlib import reload
+
 import event_list
 fileslist = event_list.fileslist
+
+
 similarity_conf = 0.95
 
 pat1 = '(?:[0-9]|\\b|_)('
@@ -106,7 +109,10 @@ def sortfolder():
         for pos in com:
             files = [f for f in glob.glob(f'*',) if os.path.isfile(f)]
             for afile in files:
-                pattern = pat1+pos.lower()+pat2
+                if len(pos)<6:
+                    pattern = pat1+pos.lower()+pat2
+                else:
+                    pattern = pat1+'.*'+pos.lower()+'.*'+pat2
                 if (re.search(pattern, os.path.basename(afile), re.IGNORECASE | re.MULTILINE)) and not (afile.split('.')[-1] == 'zip'):
                     os.makedirs(j, exist_ok=True)
                     shutil.move(afile, j)
@@ -125,10 +131,10 @@ class getOutOfLoop(Exception):
     pass
 
 
-name = 'kenston'
-yr = 2018
-wd = f'/home/karmanyaahm/data/oldstff/random/{name}-{yr}/'
-div = 'c'
+name = 'rustin'
+yr = 20
+wd = f'/home/karmanyaahm/data/oldstff/random/allpublic/{name}-20{yr}/'
+div = 'b'
 
 if __name__ == "__main__":
     os.chdir(wd)
@@ -136,7 +142,7 @@ if __name__ == "__main__":
         merge_same_name()
         delempty('.')
 
-    for _ in range(3):
+    for _ in range(100):
         if len([fi for fi in getfiles() if '.zip' not in fi]) > 0:
             merge_same_name()
             sortfolder()
@@ -150,7 +156,7 @@ if __name__ == "__main__":
             break
 
     try:
-        for _ in range(3):
+        for _ in range(100):
             event_list = reload(event_list)
             fileslist = event_list.fileslist
             zipa()

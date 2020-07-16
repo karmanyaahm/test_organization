@@ -53,6 +53,7 @@ biology:
     ornithology:
       ids:
         - ornith
+        - orthinology
       rotations: false
   disease:
     disease_detectives:
@@ -211,6 +212,7 @@ earth_science:
       ids:
         - dynamic planet
         - oceanography
+        - dp
       rotations:
         fresh_water: [2011, 2012]
         glacier: [2005, 2006, 2013, 2014, 2019]
@@ -226,6 +228,7 @@ earth_science:
       ids:
         - mapping
         - geo map
+        - geomap
       rotations: false
   hydrosphere:
     hydrogeology:
@@ -307,6 +310,7 @@ physics:
     circuit_lab:
       ids:
         - circuit
+        - circuits
       rotations: false
   density:
     density_lab:
@@ -367,6 +371,7 @@ technology:
     elastic_launch_glider:
       ids:
         - elglider
+        - elastic launched
       rotations: false
     helicopters:
       ids:

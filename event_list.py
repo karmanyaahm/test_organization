@@ -199,15 +199,14 @@ fileslist = []
 
 rotations = {}
 
+cat = load(open('/home/karmanyaahm/data/oldstff/tests/scripts/event_list.yml', 'r').read(),Loader=FullLoader)
+for i, j in events_from_dict(cat):
+    dirs = j.split('/')[1:]
+    fileslist.append(
+        (list(i['ids']) if 'ids' in i.keys() else [], dirs[-1], dirs[:-1]))
+    if r:= i['rotations']:
+        rotations[dirs[-1]] = r
 if __name__ == "__main__":
-    global cat
-    cat = load(open('event_list.yml', 'r').read(),Loader=FullLoader)
-    for i, j in events_from_dict(cat):
-        dirs = j.split('/')[1:]
-        fileslist.append(
-            (list(i['ids']) if 'ids' in i.keys() else [], dirs[-1], dirs[:-1]))
-        if r:= i['rotations']:
-            rotations[dirs[-1]] = r
     print(len(fileslist))
 
 
@@ -276,4 +275,3 @@ def get_blocked():
     return notrade
 
 
-blocked = get_blocked()
