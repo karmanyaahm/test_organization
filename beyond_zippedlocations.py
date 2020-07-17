@@ -6,8 +6,7 @@ import glob
 from event_list import fileslist, rotations
 
 
-start = '/home/karmanyaahm/data/oldstff/tests/'
-
+from data import bzstart as start
 
 def initvars(divi):
     global byevent
@@ -100,7 +99,7 @@ def dorotations():
 
 
 def main():
-    for i in ['c', 'b']:
+    for i in 'cb':
         initvars(i)
         move()
         dorotations()

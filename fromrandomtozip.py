@@ -1,3 +1,5 @@
+from data import wd, div
+from data import similarity_conf, pat1, pat2
 import pwn as pwn
 from difflib import SequenceMatcher
 import glob
@@ -11,13 +13,6 @@ from importlib import reload
 
 import event_list
 fileslist = event_list.fileslist
-
-
-similarity_conf = 0.95
-
-pat1 = '(?:[0-9]|\\b|_)('
-
-pat2 = ')(?:[0-9]|\\b|_)'
 
 
 class EventDoesNotExist(Exception):
@@ -109,7 +104,7 @@ def sortfolder():
         for pos in com:
             files = [f for f in glob.glob(f'*',) if os.path.isfile(f)]
             for afile in files:
-                if len(pos)<6:
+                if len(pos) < 6:
                     pattern = pat1+pos.lower()+pat2
                 else:
                     pattern = pat1+'.*'+pos.lower()+'.*'+pat2
@@ -130,11 +125,6 @@ def merge_same_name():
 class getOutOfLoop(Exception):
     pass
 
-
-name = 'rustin'
-yr = 20
-wd = f'/home/karmanyaahm/data/oldstff/random/allpublic/{name}-20{yr}/'
-div = 'b'
 
 if __name__ == "__main__":
     os.chdir(wd)

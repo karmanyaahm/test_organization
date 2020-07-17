@@ -24,7 +24,6 @@ public:
 
   b:
     testexchange: [2020]
-    harvard: [2020]
     umichigan: [2020]
     2019:
       - cobra
@@ -35,6 +34,8 @@ public:
       - uta
   bc:
     ufso: [2019, 2020]
+    harvard: [2020]
+
 
 not_trade:
   c:

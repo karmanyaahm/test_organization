@@ -1,5 +1,7 @@
 #! /usr/bin/env python3.8
 from __future__ import print_function
+from data import next_year, spreadsheet_id 
+from data import listart as start
 import pickle
 import os.path
 from googleapiclient.discovery import build
@@ -45,17 +47,10 @@ def sheets_stuff():
     return service.spreadsheets().values()
 
 
-next_year = 2021
-
 spreadsheetValuesObject = sheets_stuff()
 
 
-start = '/home/karmanyaahm/data/oldstff/tests/bylocation/'
-
 os.chdir(start)
-
-
-spreadsheet_id = '1EI_McY52x9RBUgShYJZFVzeEW4KCsFKS5ByjgUCFkgM'
 
 
 for div in ['b', 'c']:
