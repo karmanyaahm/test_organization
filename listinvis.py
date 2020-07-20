@@ -42,6 +42,24 @@ def sheets_stuff(spreadsheet_id):
     service = build('sheets', 'v4', credentials=creds)
     return service.spreadsheets().values()
 
+def getinvis(div):
+    '''
+    chdir into start before running this method
+    '''
+    os.chdir(f'good-{div}')
+    dirs = [ddir[2:] for ddir in getdirs()]
+    os.chdir('..')
+    # got list of invis
+
+    dirs = [this.split('-') for this in dirs]
+    oldest = 210000000
+    for d, f in dirs:
+        oldest = min(int(f), int(oldest))
+    # found the oldest test, dirs are now split by '-'
+
+    invis = sorted(list(set([d[0] for d in dirs])))
+    # get list of unique invis by name only
+    return invis,oldest,dirs
 
 
 def main(start,spreadsheet_id,next_year,blocked,):
@@ -52,19 +70,7 @@ def main(start,spreadsheet_id,next_year,blocked,):
 
     for div in ['b', 'c']:
         #########################################################
-        os.chdir(f'good-{div}')
-        dirs = [ddir[2:] for ddir in getdirs()]
-        os.chdir('..')
-        # got list of invis
-
-        dirs = [this.split('-') for this in dirs]
-        oldest = 2100
-        for d, f in dirs:
-            oldest = min(int(f), int(oldest))
-        # found the oldest test, dirs are now split by '-'
-
-        invis = sorted(list(set([d[0] for d in dirs])))
-        # get list of unique invis by name only
+        invis,oldest,dirs=getinvis(div)
         write = []
 
         for i in invis:
