@@ -280,6 +280,6 @@ def get_blocked():
 
 
 if __name__ == "__main__":
-    from data import eventlistfile
+    from main import eventlistfile
     fileslist,rotations = getfileslist(eventlistfile)
     blocked = get_blocked()

@@ -111,6 +111,6 @@ def main(eventlistfile, start):
 
 
 if __name__ == "__main__":
-    from data import eventlistfile, start
+    from main import eventlistfile, start
 
     main(eventlistfile, start)

@@ -138,6 +138,6 @@ if __name__ == "__main__":
     from event_list import get_blocked
     
     blocked = get_blocked()
-    from data import next_year, spreadsheet_id,start
+    from main import next_year, spreadsheet_id,start
     start = start + 'bylocation/'
     main(start,spreadsheet_id,next_year,blocked)

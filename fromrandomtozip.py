@@ -161,5 +161,5 @@ def main(eventlistfile,wd, Div, Similarity_conf, Pat1, Pat2,start):
 
 
 if __name__ == "__main__":
-    from data import eventlistfile,wd, div, similarity_conf, pat1, pat2,start
+    from main import eventlistfile,wd, div, similarity_conf, pat1, pat2,start
     main(eventlistfile,wd, div, similarity_conf, pat1, pat2,start)
