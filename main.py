@@ -1,3 +1,4 @@
+#! /usr/bin/env python3.8
 
 from __future__ import unicode_literals
 from prompt_toolkit.validation import Validator, ValidationError
@@ -11,6 +12,13 @@ from datetime import date
 
 
 import os
+
+
+### prompt stuff ###
+DummyValidator = Validator.from_callable(
+    lambda a: True, error_message='code broken')
+
+
 ### listinvis ###
 next_year = date.today().year+1
 
@@ -40,7 +48,7 @@ def randomtozip(wd, div):
                          similarity_conf, pat1, pat2, start)
 
 
-def randomtestarrange():
+def randomtestarrange(term, locations):
     DivisionValidator = Validator.from_callable(
         is_division, error_message='Enter either b or c', move_cursor_to_end=True)
     div = term.prompt(
@@ -52,8 +60,7 @@ def randomtestarrange():
     os.chdir(locations.pop())
 
     event_complete = FuzzyWordCompleter(invis)
-    name = term.prompt("Name: ", completer=event_complete, validator=Validator.from_callable(
-        lambda a: True, error_message='code broken')).strip()
+    name = term.prompt("Name: ", completer=event_complete, validator=DummyValidator).strip()
 
     def is_year(yr):
         yr = '20'+yr
@@ -90,11 +97,12 @@ def main():
         1 - Random test arrangement to zip
         2 - arrange beyond zipped
         3 - spreadsheet upload
+        q - quit
         ''')
-        inp = term.prompt("> ").strip()
+        inp = term.prompt("> ", validator=DummyValidator).strip()
 
         if inp == '1':
-            randomtestarrange()
+            randomtestarrange(term, locations)
         elif inp == '2':
             beyond_zipped()
         elif inp == '3':

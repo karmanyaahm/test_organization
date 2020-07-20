@@ -341,9 +341,11 @@ physics:
         - sound
       rotations: false
   waves:
-    crave the wave:
+    crave_the_wave:
       rotations: false
     wifi_lab:
+      ids:
+        - radio_lab
       rotations: false
   wind:
     wind_power:

@@ -74,18 +74,18 @@ def zipa():
             shutil.rmtree(i)
 
 
-def rename(renamenum, filename, newname):
-    i = filename
-    j = newname + i[renamenum:]
-    shutil.move(i, j)
-    print(j)
+# def rename(renamenum, filename, newname):
+#     i = filename
+#     j = newname + i[renamenum:]
+#     shutil.move(i, j)
+#     print(j)
 
 
-def rename_BorC():
-    files = glob.glob('*.zip')
-    for thefile in files:
-        thefile = os.path.basename(thefile)
-        shutil.move(thefile, thefile[:-5]+'b.zip')
+# def rename_BorC():
+#     files = glob.glob('*.zip')
+#     for thefile in files:
+#         thefile = os.path.basename(thefile)
+#         shutil.move(thefile, thefile[:-5]+'b.zip')
 
 
 def sortfolder():
