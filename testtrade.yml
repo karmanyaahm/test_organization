@@ -7,7 +7,6 @@ public:
     georgia: [2018,2019]
     umaryland: [2020]
     umichigan: [2019,2020]
-    west_windsor_plainsboro_north: [2019]
     2019:
       - dartmouth
       - ggso
@@ -28,18 +27,21 @@ public:
     2019:
       - cobra
       - colt
-      - garnet
-      - liso
+      - garnet_valley
+      - long_island
       - uga
       - uta
   bc:
     ufso: [2019, 2020]
     harvard: [2020]
+    university_texas: [2019]
 
 
 not_trade:
   c:
     testexchange: [2020]
+    west_windsor_plainsboro_north: [2019]
+
 
   b:
     testexchange: [2020]

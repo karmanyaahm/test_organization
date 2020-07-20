@@ -1,12 +1,11 @@
+from functions import delempty
 import re
 import shutil
 import zipfile
 import os
 import glob
-from event_list import fileslist, rotations
+from event_list import getfileslist
 
-
-from data import bzstart as start
 
 def initvars(divi):
     global byevent
@@ -17,14 +16,6 @@ def initvars(divi):
     div = divi
 
 
-def delempty(dir):
-    for i in [f[0] for f in os.walk(dir) if os.path.isdir(f[0])]:
-        try:
-            os.rmdir(i)
-        except OSError:
-            pass
-
-
 def move():
     todir = f'byevent-{div}/'
     for j in fileslist:
@@ -32,15 +23,14 @@ def move():
         j = j[0]
         ki = byevent + k
         os.makedirs(ki, exist_ok=True)
-        for ji in j:
-            files = glob.glob(
-                f'bylocation/good-{div}/*/*{ji}*', recursive=True)
-            for i in files:
-                try:
-                    os.symlink(f'../../{i}', byevent +
-                               f'{k}/{os.path.split(i)[1]}')
-                except FileExistsError:
-                    pass
+        files = glob.glob(
+            f'bylocation/good-{div}/*/*-{k}-*', recursive=True)
+        for i in files:
+            try:
+                os.symlink(f'../../{i}', byevent +
+                           f'{k}/{os.path.split(i)[1]}')
+            except FileExistsError:
+                pass
 
 
 def moveback():
@@ -98,7 +88,7 @@ def dorotations():
             os.chdir('../..')
 
 
-def main():
+def mainmain():
     for i in 'cb':
         initvars(i)
         move()
@@ -106,10 +96,21 @@ def main():
         symlink()
 
 
-if __name__ == "__main__":
+def main(eventlistfile, start):
+    cwd = os.getcwd()
+    global fileslist, rotations
+    fileslist, rotations = getfileslist(eventlistfile)
+
     os.chdir(start)
     delempty('.')
 
-    main()
+    mainmain()
 
     delempty('.')
+    os.chdir(cwd)
+
+
+if __name__ == "__main__":
+    from data import eventlistfile, start
+
+    main(eventlistfile, start)

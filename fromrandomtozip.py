@@ -1,5 +1,4 @@
-from data import wd, div
-from data import similarity_conf, pat1, pat2
+from functions import getdirs,delempty
 import pwn as pwn
 from difflib import SequenceMatcher
 import glob
@@ -8,11 +7,7 @@ import shutil
 import zipfile
 import os
 import re
-from beyond_zippedlocations import start, initvars, delempty
-from importlib import reload
-
-import event_list
-fileslist = event_list.fileslist
+from event_list import getfileslist
 
 
 class EventDoesNotExist(Exception):
@@ -21,10 +16,6 @@ class EventDoesNotExist(Exception):
 
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
-
-
-def getdirs():
-    return [f.path for f in os.scandir('.') if f.is_dir()]
 
 
 def getfiles():
@@ -126,7 +117,11 @@ class getOutOfLoop(Exception):
     pass
 
 
-if __name__ == "__main__":
+def main(eventlistfile,wd, Div, Similarity_conf, Pat1, Pat2,start):
+    cwd = os.getcwd()
+    global fileslist,pat1,pat2,similarity_conf,div
+    pat1,pat2,similarity_conf,div = Pat1,Pat2,Similarity_conf,Div
+    fileslist,rotations = getfileslist(eventlistfile)
     os.chdir(wd)
     for _ in range(2):
         merge_same_name()
@@ -140,15 +135,13 @@ if __name__ == "__main__":
 
             pwn.pause()
 
-            event_list = reload(event_list)
-            fileslist = event_list.fileslist
+            fileslist,rotations = getfileslist(eventlistfile)
         else:
             break
 
     try:
         for _ in range(100):
-            event_list = reload(event_list)
-            fileslist = event_list.fileslist
+            fileslist,rotations = getfileslist(eventlistfile)
             zipa()
 
             files = getfiles()+getdirs()
@@ -164,3 +157,9 @@ if __name__ == "__main__":
 
     except getOutOfLoop:
         pass
+    os.chdir(cwd)
+
+
+if __name__ == "__main__":
+    from data import eventlistfile,wd, div, similarity_conf, pat1, pat2,start
+    main(eventlistfile,wd, div, similarity_conf, pat1, pat2,start)
