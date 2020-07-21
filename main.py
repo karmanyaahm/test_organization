@@ -14,11 +14,6 @@ from datetime import date
 import sys
 
 
-
-
-
-
-
 ### prompt stuff ###
 DummyValidator = Validator.from_callable(
     lambda a: True, error_message='code broken')
@@ -52,6 +47,26 @@ def beyond_zipped():
 def randomtozip(wd, div):
     fromrandomtozip.main(eventlistfile, wd, div,
                          similarity_conf, pat1, pat2, start)
+def status():
+    blocked = event_list.get_blocked(blocklistfile)
+    print(f"{len(blocked['c'])} div c invis blocked")
+    print(f"{len(blocked['b'])} div b invis blocked")
+    print(f"For details look at {blocklistfile}")
+    fileslist,rotations = event_list.getfileslist(eventlistfile)
+    print(f'{len(fileslist)} events exist in the database')
+    print(f'{len(rotations.keys())} individual events  have rotations setup which are {tuple(rotations.keys())}')
+    print(f"For details look at {eventlistfile}")
+
+
+def get_help():
+    print_formatted_text('''
+        1 - Random test arrangement to zip
+        2 - arrange beyond zipped
+        3 - spreadsheet upload
+        4 - status (wip)
+        h - help
+        q - quit
+        ''')
 
 
 def randomtestarrange(term, locations):
@@ -90,36 +105,41 @@ def randomtestarrange(term, locations):
 spreadsheet_id = '1EI_McY52x9RBUgShYJZFVzeEW4KCsFKS5ByjgUCFkgM'
 # spreadsheet_id = '15rfL6gtEmJnbaUnR-q320swX9kvOyunpneYIsupRNNQ' #for testing
 
-start = '/home/karmanyaahm/data/oldstff/tests/'
+
+maindir = '/home/karmanyaahm/data/oldstff'
+
+start = maindir+'/tests/'
 
 
-wd = f'/home/karmanyaahm/data/oldstff/random/'
+wd = maindir+'/random/'
 
 
 def main():
     locations = []
     locations.append(os.getcwd())
     term = PromptSession()
+    get_help()
     while 1:
 
-        print_formatted_text('''
-        1 - Random test arrangement to zip
-        2 - arrange beyond zipped
-        3 - spreadsheet upload
-        q - quit
-        ''')
         inp = term.prompt("> ", validator=DummyValidator).strip()
 
         if inp == '1':
             randomtestarrange(term, locations)
         elif inp == '2':
             beyond_zipped()
+            print("================ DONE ================")
+
         elif inp == '3':
             spreadsheet()
+        elif inp == '4':
+            status()
+        elif inp == 'h':
+            get_help()
         elif inp == 'q' or inp == 'quit' or inp == 'exit':
             print("================ BYE ================")
             exit(0)
-        print("================ DONE ================")
+        else:
+            print('Wrong Input')
     os.chdir(locations.pop())
 
 

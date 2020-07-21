@@ -1,26 +1,71 @@
 # Scioly test scripts
 
-1. Basic user interface is ready
+
+
+### Note
+**credentials.json contains secrets that can access my account and I'm trusting everyone who has access to this repo to not misuse it also token.pickle contains secrets that can access the account that the is signed in when running listinvis but that should automatically just stay on your computer and should not be uploaded**
+
 
 To get started with this:
 
-* run main.py
+* Edit the following variables in main.py - maindir, spreadsheetid
+* Follow getting started and set up directory structure and spreadsheet
 * follow instructions
 
-2. Platforms:
+1. Platforms:
    * Tested on Arch Linux with Python 3.8
    * Will probably work on any Linux
    * I'm 99% sure this should work on any POSIX OS (mac, bsd, etc)
 
 
 
+## Getting Started
+
+### Example directory structure
 
 
+* random  
+  * yet_to_be_sorted_invi-2012
+    * absolutely a file from an actual invi  
+    * anatomy/  
+    * codebusters/  
+    * scores.pdf  
+* tests  
+    * bylocation  
+      * good-b  
+        * invitational-1985  
+          * harvard-1985-forensics-b.zip  
+          * harvard-1985-fossils-b.zip  
+      * good-c  
+        * invitational-1985  
+          * harvard-2020-forensics-c.zip  
+          * harvard-2020-fossils-c.zip  
+    * scripts  
+        * main.py  
+        * README.md  
+        * zzz etc  
+  
+  
+### Super Basic Workflow
 
+1. Move invi to random and rename it to `name-year`
+2. Run option one in the code(running ./main.py)
+3. Move the `name-year` after running option one to bylocation/good-`division`
+4. Run option 2 in the code
+5. Run option 3 in the code
+6. Nice done
 
+### Spreadsheet
 
-### Note
-**credentials.json contains secrets that can access my account and I'm trusting everyone who has access to this repo to not misuse it also token.pickle contains secrets that can access the account that the is signed in when running listinvis but that should automatically just stay on your computer and should not be uploaded**
+To use the spreadsheet feature, you should have a spreadsheet with two sheets 'invis_list-c' and 'invis_list-b'  
+You can get the spreadsheet id from the `https://docs.google.com/spreadsheets/d/1EI_McY52x9RBUgShYJZFVzeEW4KCsFKS5ByjgUCFkgM/edit?usp=sharing`
+middle part of the spreadsheet url
+  
+    
+      
+        
+
+#### Note
 * run command like `find ./byevent-c/ -type l -printf "%f\n" |sort` to get list of all tests and then diff by bylocation to find missing 
 ```
 find ./byevent-c/  -maxdepth 2 -type l   -printf "%f\n" |sort > s 
