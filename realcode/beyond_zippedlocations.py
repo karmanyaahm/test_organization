@@ -59,9 +59,7 @@ def symlink():
             print(f'update {j[1]}')
 
 
-def getzips(inpdir='.'):
-    return [os.path.basename(f.path) for f in os.scandir(inpdir) if f.is_file() and os.path.basename(f.path).split('.')[1] == 'zip']
-
+from .functions import getzips
 
 def get_category_from_year(event, year):
     for j, k in rotations[event].items():

@@ -1,4 +1,4 @@
-from .functions import getdirs,delempty
+from .functions import getdirs,delempty,getfiles
 import pwn as pwn
 from difflib import SequenceMatcher
 import glob
@@ -18,8 +18,6 @@ def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
 
 
-def getfiles():
-    return [f.path for f in os.scandir('.') if f.is_file()]
 
 
 def zipdir(path, ziph):
@@ -73,19 +71,6 @@ def zipa():
                 zipdir(i, zipf)
             shutil.rmtree(i)
 
-
-# def rename(renamenum, filename, newname):
-#     i = filename
-#     j = newname + i[renamenum:]
-#     shutil.move(i, j)
-#     print(j)
-
-
-# def rename_BorC():
-#     files = glob.glob('*.zip')
-#     for thefile in files:
-#         thefile = os.path.basename(thefile)
-#         shutil.move(thefile, thefile[:-5]+'b.zip')
 
 
 def sortfolder():
