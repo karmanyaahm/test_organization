@@ -8,7 +8,9 @@ More announcements will be here soon
 
 
 
-
+### Code:
+<https://github.com/Beachwood-Science-Olympiad/test_organization>  
+Copyright DBAD License
 
 ### Credits:
 Initial tests:  
@@ -18,7 +20,7 @@ Initial tests:
 Additional tests:
   * Scioly Discord Server
 
-Programming and organizing:
+Programming and organizing and writing and maintaining this:
    * Karmanyaah Malhotra
         
     
