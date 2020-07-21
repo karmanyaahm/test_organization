@@ -5,21 +5,21 @@ import os
 if os.name == 'nt':
     print('use a real OS like mac or linux or bsd or something')
     exit(69)
-from prompt_toolkit.validation import Validator, ValidationError
-from prompt_toolkit.completion import FuzzyWordCompleter
-from prompt_toolkit import PromptSession, print_formatted_text
-from realcode.functions import is_division
-from realcode import listinvis,beyond_zippedlocations,fromrandomtozip,event_list
-from datetime import date
+from realcode import listinvis, beyond_zippedlocations, fromrandomtozip, event_list
 import sys
+from datetime import date
+from realcode.functions import is_division
+from prompt_toolkit import PromptSession, print_formatted_text
+from prompt_toolkit.completion import FuzzyWordCompleter
+from prompt_toolkit.validation import Validator, ValidationError
 
 
 ### prompt stuff ###
 DummyValidator = Validator.from_callable(
     lambda a: True, error_message='code broken')
-
-blocklistfile = os.path.realpath(sys.path[0])+'/data/testtrade.yml'
-eventlistfile =os.path.realpath(sys.path[0])+'/data/event_list.yml'
+root = os.path.realpath(sys.path[0])
+blocklistfile = root+'/data/testtrade.yml'
+eventlistfile = root+'/data/event_list.yml'
 
 ### listinvis ###
 next_year = date.today().year+1
@@ -37,7 +37,8 @@ pat2 = ')(?:[0-9]|\\b|_)'
 
 def spreadsheet():
     blocked = event_list.get_blocked(blocklistfile)
-    listinvis.main(start + 'bylocation/', spreadsheet_id, next_year, blocked)
+    listinvis.main(start + 'bylocation/', spreadsheet_id,
+                   next_year, blocked, root)
 
 
 def beyond_zipped():
@@ -47,12 +48,14 @@ def beyond_zipped():
 def randomtozip(wd, div):
     fromrandomtozip.main(eventlistfile, wd, div,
                          similarity_conf, pat1, pat2, start)
+
+
 def status():
     blocked = event_list.get_blocked(blocklistfile)
     print(f"{len(blocked['c'])} div c invis blocked")
     print(f"{len(blocked['b'])} div b invis blocked")
     print(f"For details look at {blocklistfile}")
-    fileslist,rotations = event_list.getfileslist(eventlistfile)
+    fileslist, rotations = event_list.getfileslist(eventlistfile)
     print(f'{len(fileslist)} events exist in the database')
     print(f'{len(rotations.keys())} individual events  have rotations setup which are {tuple(rotations.keys())}')
     print(f"For details look at {eventlistfile}")
@@ -86,7 +89,6 @@ def randomtestarrange(term, locations):
     event_complete = FuzzyWordCompleter(invis)
     name = term.prompt("Name: ", completer=event_complete,
                        validator=DummyValidator).strip()
-
 
     def is_year(yr):
         yr = '20'+yr
