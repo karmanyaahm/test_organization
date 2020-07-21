@@ -254,7 +254,7 @@ def parse_mix(inp):
     return inp
 
 
-def get_blocked():
+def get_blocked(blocklistfile):
     import collections
 
     def dict_merge(dct, merge_dct):
@@ -273,13 +273,13 @@ def get_blocked():
             else:
                 dct[k] = merge_dct[k]
 
-    nt = load(open('testtrade.yml', 'r').read(), Loader=FullLoader)
+    nt = load(open(blocklistfile, 'r').read(), Loader=FullLoader)
     notrade = parse_mix(nt['public']).copy()
     dict_merge(notrade, parse_mix(nt['not_trade']))
     return notrade
 
 
-if __name__ == "__main__":
-    from main import eventlistfile
-    fileslist,rotations = getfileslist(eventlistfile)
-    blocked = get_blocked()
+# if __name__ == "__main__":
+#     from main import eventlistfile,blocklistfile
+#     fileslist,rotations = getfileslist(eventlistfile)
+#     blocked = get_blocked(blocklistfile)

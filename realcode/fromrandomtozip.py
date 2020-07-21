@@ -1,4 +1,4 @@
-from functions import getdirs,delempty
+from .functions import getdirs,delempty
 import pwn as pwn
 from difflib import SequenceMatcher
 import glob
@@ -7,7 +7,7 @@ import shutil
 import zipfile
 import os
 import re
-from event_list import getfileslist
+from .event_list import getfileslist
 
 
 class EventDoesNotExist(Exception):
@@ -62,7 +62,7 @@ def zipa():
             j = get_real_name(j)
 
         except EventDoesNotExist:
-            print('no', j)
+            print('no', j,'event')
         # if inp:=input()!='':
         #     j = inp
         # print()
@@ -160,6 +160,6 @@ def main(eventlistfile,wd, Div, Similarity_conf, Pat1, Pat2,start):
     os.chdir(cwd)
 
 
-if __name__ == "__main__":
-    from main import eventlistfile,wd, div, similarity_conf, pat1, pat2,start
-    main(eventlistfile,wd, div, similarity_conf, pat1, pat2,start)
+# if __name__ == "__main__":
+#     from main import eventlistfile,wd, div, similarity_conf, pat1, pat2,start
+#     main(eventlistfile,wd, div, similarity_conf, pat1, pat2,start)

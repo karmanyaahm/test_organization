@@ -4,7 +4,13 @@
 
 To get started with this:
 
-* 
+* run main.py
+* follow instructions
+
+2. Platforms:
+   * Tested on Arch Linux with Python 3.8
+   * Will probably work on any Linux
+   * I'm 99% sure this should work on any POSIX OS (mac, bsd, etc)
 
 
 

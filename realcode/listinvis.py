@@ -10,7 +10,7 @@ from google.auth.transport.requests import Request
 import os
 import shutil
 import difflib
-from functions import getdirs
+from .functions import getdirs
 
 def sheets_stuff(spreadsheet_id):
     # If modifying these scopes, delete the file token.pickle.
@@ -60,6 +60,15 @@ def getinvis(div):
     invis = sorted(list(set([d[0] for d in dirs])))
     # get list of unique invis by name only
     return invis,oldest,dirs
+
+
+def diff(og,write):
+    for line in difflib.unified_diff([','.join(line) for line in og], [','.join(line) for line in write], fromfile='old', tofile='new', lineterm='', n=0):
+        for prefix in ('---', '+++', '@@'):
+            if line.startswith(prefix):
+                break
+        else:
+            print(line,)
 
 
 def main(start,spreadsheet_id,next_year,blocked,):
@@ -126,12 +135,7 @@ def main(start,spreadsheet_id,next_year,blocked,):
 
         print(','.join([str(i)[2:] for i in write[0][1:]]))
 
-        for line in difflib.unified_diff([','.join(line) for line in og], [','.join(line) for line in write], fromfile='old', tofile='new', lineterm='', n=0):
-            for prefix in ('---', '+++', '@@'):
-                if line.startswith(prefix):
-                    break
-            else:
-                print(line,)
+        diff(og,write)
     os.chdir(cwd)
 
 
@@ -140,10 +144,9 @@ def main(start,spreadsheet_id,next_year,blocked,):
 
 
 
-if __name__ == "__main__":
-    from event_list import get_blocked
-    
-    blocked = get_blocked()
-    from main import next_year, spreadsheet_id,start
-    start = start + 'bylocation/'
-    main(start,spreadsheet_id,next_year,blocked)
+# if __name__ == "__main__":
+#     from event_list import get_blocked
+#     from ..main import next_year, spreadsheet_id,start,blocklistfile
+#     blocked = get_blocked(blocklistfile)
+#     start = start + 'bylocation/'
+#     main(start,spreadsheet_id,next_year,blocked)

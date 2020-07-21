@@ -1,23 +1,30 @@
 #! /usr/bin/env python3.8
 
 from __future__ import unicode_literals
+import os
+if os.name == 'nt':
+    print('use a real OS like mac or linux or bsd or something')
+    exit(69)
 from prompt_toolkit.validation import Validator, ValidationError
 from prompt_toolkit.completion import FuzzyWordCompleter
 from prompt_toolkit import PromptSession, print_formatted_text
-import listinvis
-import beyond_zippedlocations
-import fromrandomtozip
-from functions import is_division
+from realcode.functions import is_division
+from realcode import listinvis,beyond_zippedlocations,fromrandomtozip,event_list
 from datetime import date
+import sys
 
 
-import os
+
+
+
 
 
 ### prompt stuff ###
 DummyValidator = Validator.from_callable(
     lambda a: True, error_message='code broken')
 
+blocklistfile = os.path.realpath(sys.path[0])+'/data/testtrade.yml'
+eventlistfile =os.path.realpath(sys.path[0])+'/data/event_list.yml'
 
 ### listinvis ###
 next_year = date.today().year+1
@@ -34,8 +41,7 @@ pat2 = ')(?:[0-9]|\\b|_)'
 
 
 def spreadsheet():
-    from event_list import get_blocked
-    blocked = get_blocked()
+    blocked = event_list.get_blocked(blocklistfile)
     listinvis.main(start + 'bylocation/', spreadsheet_id, next_year, blocked)
 
 
@@ -53,22 +59,27 @@ def randomtestarrange(term, locations):
         is_division, error_message='Enter either b or c', move_cursor_to_end=True)
     div = term.prompt(
         "Division (b or c): ", validator=DivisionValidator, validate_while_typing=False).strip()
+    ## got division ##
 
+    ### get list of events ###
     locations.append(os.getcwd())
     os.chdir(start+'bylocation/')
     invis = set(listinvis.getinvis('b')[0]+listinvis.getinvis('c')[0])
     os.chdir(locations.pop())
 
+    ### ask for which event ###
     event_complete = FuzzyWordCompleter(invis)
-    name = term.prompt("Name: ", completer=event_complete, validator=DummyValidator).strip()
+    name = term.prompt("Name: ", completer=event_complete,
+                       validator=DummyValidator).strip()
+
 
     def is_year(yr):
         yr = '20'+yr
         return (int(yr) < next_year and int(yr) > 2000)
 
+    ## ask for year ##
     YearValidator = Validator.from_callable(
         is_year, error_message=f"enter a number under {next_year} above 2000", move_cursor_to_end=True)
-
     yr = term.prompt("Year: 20", validator=YearValidator,
                      validate_while_typing=False).strip()
     # if someone uses this from like 2100 to 2110 you should probably fix this part to accomodate for the 90s
@@ -76,7 +87,6 @@ def randomtestarrange(term, locations):
     randomtozip(wd+f'{name}-20{yr}/', div)
 
 
-eventlistfile = '/home/karmanyaahm/data/oldstff/tests/scripts/event_list.yml'
 spreadsheet_id = '1EI_McY52x9RBUgShYJZFVzeEW4KCsFKS5ByjgUCFkgM'
 # spreadsheet_id = '15rfL6gtEmJnbaUnR-q320swX9kvOyunpneYIsupRNNQ' #for testing
 
@@ -87,7 +97,6 @@ wd = f'/home/karmanyaahm/data/oldstff/random/'
 
 
 def main():
-
     locations = []
     locations.append(os.getcwd())
     term = PromptSession()

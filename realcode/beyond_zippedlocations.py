@@ -1,10 +1,10 @@
-from functions import delempty
+from .functions import delempty
 import re
 import shutil
 import zipfile
 import os
 import glob
-from event_list import getfileslist
+from .event_list import getfileslist
 
 
 def initvars(divi):
@@ -110,7 +110,7 @@ def main(eventlistfile, start):
     os.chdir(cwd)
 
 
-if __name__ == "__main__":
-    from main import eventlistfile, start
+# if __name__ == "__main__":
+#     from main import eventlistfile, start
 
-    main(eventlistfile, start)
+#     main(eventlistfile, start)
