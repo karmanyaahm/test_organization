@@ -5,3 +5,6 @@ token.pickle
 .vscode
 workspace.code-workspace
 commented_event_list.txt
+build
+dist
+*.spec

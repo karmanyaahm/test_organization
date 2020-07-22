@@ -7,8 +7,9 @@ if os.name == "nt":
     print("use a real posix OS like mac or linux or bsd or something")
     exit(69)
 
+from yaml import load, FullLoader
 from prompt_toolkit.validation import Validator, ValidationError
-from prompt_toolkit.completion import FuzzyWordCompleter
+from prompt_toolkit.completion import FuzzyWordCompleter,WordCompleter
 from prompt_toolkit import PromptSession, print_formatted_text
 from realcode.functions import is_division
 from datetime import date
@@ -18,22 +19,25 @@ from stringcase import titlecase
 
 ### prompt stuff ###
 DummyValidator = Validator.from_callable(lambda a: True, error_message="code broken")
-root = os.path.realpath(sys.path[0])
-blocklistfile = root + "/data/testtrade.yml"
-eventlistfile = root + "/data/event_list.yml"
-
+DummyCompleter=WordCompleter([])
+root = os.path.dirname(os.path.realpath(__file__))
 ### listinvis ###
 next_year = date.today().year + 1
 
-### rand to zip ###
-similarity_conf = 0.95
+
+config = load(open(root+"/config.yml", "r"), Loader=FullLoader)
+blocklistfile = root + "/data/testtrade.yml"
+eventlistfile = root + "/data/event_list.yml"
+
 pat1 = "(?:[0-9]|\\b|_)("
 pat2 = ")(?:[0-9]|\\b|_)"
-###
 
-# name = 'mentor'
-# yr = 16
-# div = 'c'
+
+similarity_conf = config["similarity_conf"]
+spreadsheet_id = config["spreadsheet_id"]
+maindir = config["maindir"]
+start = maindir + "/tests/"
+wd = maindir + "/random/"
 
 
 def spreadsheet():
@@ -114,17 +118,6 @@ def randomtestarrange(term, locations):
     randomtozip(wd + f"{name}-20{yr}/", div)
 
 
-spreadsheet_id = "1EI_McY52x9RBUgShYJZFVzeEW4KCsFKS5ByjgUCFkgM"
-# spreadsheet_id = '15rfL6gtEmJnbaUnR-q320swX9kvOyunpneYIsupRNNQ' #for testing
-
-maindir = "/home/karmanyaahm/data/oldstff"
-
-start = maindir + "/tests/"
-
-
-wd = maindir + "/random/"
-
-
 def main():
     locations = []
     locations.append(os.getcwd())
@@ -132,7 +125,7 @@ def main():
     get_help()
     while 1:
 
-        inp = term.prompt("> ", validator=DummyValidator).strip()
+        inp = term.prompt("> ", validator=DummyValidator,completer=DummyCompleter).strip()
 
         if inp == "1":
             randomtestarrange(term, locations)
@@ -148,7 +141,7 @@ def main():
             get_help()
         elif inp == "q" or inp == "quit" or inp == "exit":
             print("================ BYE ================")
-            exit(0)
+            sys.exit(0)
         else:
             print("Wrong Input")
     os.chdir(locations.pop())

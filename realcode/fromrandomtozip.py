@@ -1,5 +1,4 @@
 from .functions import getdirs, delempty, getfiles
-import pwn as pwn
 from difflib import SequenceMatcher
 import glob
 import stringcase
@@ -8,6 +7,10 @@ import zipfile
 import os
 import re
 from .event_list import getfileslist
+
+
+def pause():
+    input("Fix files and press enter to continue")
 
 
 class EventDoesNotExist(Exception):
@@ -122,7 +125,7 @@ def main(eventlistfile, wd, Div, Similarity_conf, Pat1, Pat2, start):
             sortfolder()
             delempty(".")
 
-            pwn.pause()
+            pause()
 
             fileslist, rotations = getfileslist(eventlistfile)
         else:
@@ -142,7 +145,7 @@ def main(eventlistfile, wd, Div, Similarity_conf, Pat1, Pat2, start):
             if allzip:
                 break
 
-            pwn.pause()
+            pause()
 
     except getOutOfLoop:
         pass
