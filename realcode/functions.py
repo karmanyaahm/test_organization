@@ -2,7 +2,7 @@ import os
 
 
 def getdirs():
-    return [f.path for f in os.scandir('.') if f.is_dir()]
+    return [f.path for f in os.scandir(".") if f.is_dir()]
 
 
 def delempty(dir):
@@ -14,11 +14,11 @@ def delempty(dir):
 
 
 def is_division(text):
-    return (text.lower() == 'b' or text.lower() == 'c')
+    return text.lower() == "b" or text.lower() == "c"
+
 
 def getfiles():
-    return [f.path for f in os.scandir('.') if f.is_file()]
-
+    return [f.path for f in os.scandir(".") if f.is_file()]
 
 
 # def rename(renamenum, filename, newname):
@@ -34,5 +34,10 @@ def getfiles():
 #         thefile = os.path.basename(thefile)
 #         shutil.move(thefile, thefile[:-5]+'b.zip')
 
-def getzips(inpdir='.'):
-    return [os.path.basename(f.path) for f in os.scandir(inpdir) if f.is_file() and os.path.basename(f.path).split('.')[1] == 'zip']
+def getzips(inpdir="."):
+    return [
+        os.path.basename(f.path)
+        for f in os.scandir(inpdir)
+        if f.is_file() and os.path.basename(f.path).split(".")[1] == "zip"
+    ]
+

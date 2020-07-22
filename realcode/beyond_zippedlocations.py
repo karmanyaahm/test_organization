@@ -1,3 +1,4 @@
+from .functions import getzips
 from .functions import delempty
 import re
 import shutil
@@ -11,24 +12,22 @@ def initvars(divi):
     global byevent
     global testroot
     global div
-    byevent = f'byevent-{divi}/'
-    testroot = 'actualtests/'
+    byevent = f"byevent-{divi}/"
+    testroot = "actualtests/"
     div = divi
 
 
 def move():
-    todir = f'byevent-{div}/'
+    todir = f"byevent-{div}/"
     for j in fileslist:
         k = j[1]
         j = j[0]
         ki = byevent + k
         os.makedirs(ki, exist_ok=True)
-        files = glob.glob(
-            f'bylocation/good-{div}/*/*-{k}-*', recursive=True)
+        files = glob.glob(f"bylocation/good-{div}/*/*-{k}-*", recursive=True)
         for i in files:
             try:
-                os.symlink(f'../../{i}', byevent +
-                           f'{k}/{os.path.split(i)[1]}')
+                os.symlink(f"../../{i}", byevent + f"{k}/{os.path.split(i)[1]}")
             except FileExistsError:
                 pass
 
@@ -47,19 +46,17 @@ def symlink():
     for j in fileslist:
         if len(j) == 3:
             j, k, l = j
-            todir = testroot + f'{l[0]}/{l[1]}/{div}/'
-            fromdir = byevent+k
+            todir = testroot + f"{l[0]}/{l[1]}/{div}/"
+            fromdir = byevent + k
             if len(os.listdir(fromdir)) > 0:
                 os.makedirs(todir, exist_ok=True)
                 try:
-                    os.symlink('../../../../'+fromdir, todir+f'{k}')
+                    os.symlink("../../../../" + fromdir, todir + f"{k}")
                 except FileExistsError:
                     pass
         else:
-            print(f'update {j[1]}')
+            print(f"update {j[1]}")
 
-
-from .functions import getzips
 
 def get_category_from_year(event, year):
     for j, k in rotations[event].items():
@@ -69,25 +66,26 @@ def get_category_from_year(event, year):
 
 def dorotations():
     for event in rotations.keys():
-        todir = f'byevent-{div}/{event}'
+        todir = f"byevent-{div}/{event}"
         if os.path.isdir(todir):
             os.chdir(todir)
             zips = getzips()
             for category in rotations[event].keys():
-                os.makedirs('by_category-'+category, exist_ok=True)
+                os.makedirs("by_category-" + category, exist_ok=True)
             for thiszip in getzips():
-                cat = 'by_category-' + \
-                    get_category_from_year(event, int(thiszip.split('-')[1]))
+                cat = "by_category-" + get_category_from_year(
+                    event, int(thiszip.split("-")[1])
+                )
                 try:
-                    os.symlink('../'+thiszip, cat+'/'+thiszip)
+                    os.symlink("../" + thiszip, cat + "/" + thiszip)
                 except FileExistsError:
                     pass
 
-            os.chdir('../..')
+            os.chdir("../..")
 
 
 def mainmain():
-    for i in 'cb':
+    for i in "cb":
         initvars(i)
         move()
         dorotations()
@@ -100,11 +98,11 @@ def main(eventlistfile, start):
     fileslist, rotations = getfileslist(eventlistfile)
 
     os.chdir(start)
-    delempty('.')
+    delempty(".")
 
     mainmain()
 
-    delempty('.')
+    delempty(".")
     os.chdir(cwd)
 
 

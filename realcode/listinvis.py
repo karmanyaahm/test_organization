@@ -1,4 +1,3 @@
-#! /usr/bin/env python3.8
 from __future__ import print_function
 
 import pickle
@@ -12,9 +11,10 @@ import shutil
 import difflib
 from .functions import getdirs
 
-def sheets_stuff(spreadsheet_id,root):
+
+def sheets_stuff(spreadsheet_id, root):
     # If modifying these scopes, delete the file token.pickle.
-    SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+    SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
     ############### CREDENTIALS ####################
     """Shows basic usage of the Sheets API.
@@ -24,8 +24,8 @@ def sheets_stuff(spreadsheet_id,root):
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
-    if os.path.exists(root+'/token.pickle'):
-        with open(root+'/token.pickle', 'rb') as token:
+    if os.path.exists(root + "/token.pickle"):
+        with open(root + "/token.pickle", "rb") as token:
             creds = pickle.load(token)
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
@@ -33,25 +33,27 @@ def sheets_stuff(spreadsheet_id,root):
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                root+'/credentials.json', SCOPES)
+                root + "/credentials.json", SCOPES
+            )
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
-        with open(root+'/token.pickle', 'wb') as token:
+        with open(root + "/token.pickle", "wb") as token:
             pickle.dump(creds, token)
 
-    service = build('sheets', 'v4', credentials=creds)
+    service = build("sheets", "v4", credentials=creds)
     return service.spreadsheets().values()
 
+
 def getinvis(div):
-    '''
+    """
     chdir into start before running this method
-    '''
-    os.chdir(f'good-{div}')
+    """
+    os.chdir(f"good-{div}")
     dirs = [ddir[2:] for ddir in getdirs()]
-    os.chdir('..')
+    os.chdir("..")
     # got list of invis
 
-    dirs = [this.split('-') for this in dirs]
+    dirs = [this.split("-") for this in dirs]
     oldest = 210000000
     for d, f in dirs:
         oldest = min(int(f), int(oldest))
@@ -59,27 +61,34 @@ def getinvis(div):
 
     invis = sorted(list(set([d[0] for d in dirs])))
     # get list of unique invis by name only
-    return invis,oldest,dirs
+    return invis, oldest, dirs
 
 
-def diff(og,write):
-    for line in difflib.unified_diff([','.join(line) for line in og], [','.join(line) for line in write], fromfile='old', tofile='new', lineterm='', n=0):
-        for prefix in ('---', '+++', '@@'):
+def diff(og, write):
+    for line in difflib.unified_diff(
+        [",".join(line) for line in og],
+        [",".join(line) for line in write],
+        fromfile="old",
+        tofile="new",
+        lineterm="",
+        n=0,
+    ):
+        for prefix in ("---", "+++", "@@"):
             if line.startswith(prefix):
                 break
         else:
             print(line,)
 
 
-def main(start,spreadsheet_id,next_year,blocked,root):
+def main(start, spreadsheet_id, next_year, blocked, root):
     cwd = os.getcwd()
 
-    spreadsheetValuesObject = sheets_stuff(spreadsheet_id,root)
+    spreadsheetValuesObject = sheets_stuff(spreadsheet_id, root)
     os.chdir(start)
 
-    for div in ['b', 'c']:
+    for div in ["b", "c"]:
         #########################################################
-        invis,oldest,dirs=getinvis(div)
+        invis, oldest, dirs = getinvis(div)
         write = []
 
         for i in invis:
@@ -96,7 +105,7 @@ def main(start,spreadsheet_id,next_year,blocked,root):
             if event in invis:
                 for k in write:
                     if k[0] == event:
-                        k[1] = k[1]-years
+                        k[1] = k[1] - years
 
         for i in write.copy():
             if len(i[1]) == 0:
@@ -106,10 +115,10 @@ def main(start,spreadsheet_id,next_year,blocked,root):
             arr = []
             for i in range(oldest, next_year):
                 arr.append(1 if i in w[1] else 0)
-            write[n] = [w[0]]+list(arr)
+            write[n] = [w[0]] + list(arr)
         # get list of years in order
 
-        write.insert(0, ['invi']+list(range(oldest, next_year)))
+        write.insert(0, ["invi"] + list(range(oldest, next_year)))
 
         write = [[str(ww) for ww in w] for w in write]
 
@@ -119,29 +128,28 @@ def main(start,spreadsheet_id,next_year,blocked,root):
         range_name = f"'invis_list-{div}'!A1:Z100"
 
         result = spreadsheetValuesObject.get(
-            spreadsheetId=spreadsheet_id, range=range_name).execute()
-        og = result.get('values', [])
-        print('get')
+            spreadsheetId=spreadsheet_id, range=range_name
+        ).execute()
+        og = result.get("values", [])
+        print("get")
 
         new = write.copy()
-        new.extend([[""]*26]*(100-len(new)))
-        new = [line+[""]*(26-len(line)) for line in new]
+        new.extend([[""] * 26] * (100 - len(new)))
+        new = [line + [""] * (26 - len(line)) for line in new]
 
         if write != og:
             result = spreadsheetValuesObject.update(
-                spreadsheetId=spreadsheet_id, range=range_name,
-                valueInputOption='RAW', body={'values': new}).execute()
-            print('write')
+                spreadsheetId=spreadsheet_id,
+                range=range_name,
+                valueInputOption="RAW",
+                body={"values": new},
+            ).execute()
+            print("write")
 
-        print(','.join([str(i)[2:] for i in write[0][1:]]))
+        print(",".join([str(i)[2:] for i in write[0][1:]]))
 
-        diff(og,write)
+        diff(og, write)
     os.chdir(cwd)
-
-
-
-
-
 
 
 # if __name__ == "__main__":
