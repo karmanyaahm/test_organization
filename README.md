@@ -41,9 +41,12 @@ To get started with this:
           * harvard-2020-forensics-c.zip  
           * harvard-2020-fossils-c.zip  
     * scripts  
-        * main.py  
-        * README.md  
-        * zzz etc  
+        * File_Organizer.elf.Organizer  
+        * credentials.json  
+        * config.yml
+        * data
+          * testtrade.yml
+          * event_list.yml  
   
   
 ### Super Basic Workflow
