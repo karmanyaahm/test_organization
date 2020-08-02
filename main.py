@@ -64,8 +64,8 @@ def status():
     print(f"{len(blocked['b'])} div b invis blocked")
     print(f"For more details look at {blocklistfile}")
 
-    fileslist, rotations = dbHelper.getfileslist()
-    print(f"{len(fileslist)} events exist in the database")
+    myeventlist, rotations = dbHelper.events.event_list, dbHelper.rotations
+    print(f"{len(myeventlist)} events exist in the database")
     print(
         f"{len(rotations.keys())} individual events have rotations set up which are -- {', '.join([titlecase(i) for i in list(rotations.keys())])}"
     )
