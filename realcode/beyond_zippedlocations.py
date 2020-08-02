@@ -18,9 +18,9 @@ def initvars(divi):
 
 def move():
     todir = f"byevent-{div}/"
-    for j in fileslist:
-        k = j[1]
-        j = j[0]
+    for event in events:
+        k = event.name
+        j = event.ids
         ki = byevent + k
         os.makedirs(ki, exist_ok=True)
         files = glob.glob(f"bylocation/good-{div}/*/*-{k}-*", recursive=True)
@@ -42,7 +42,8 @@ def moveback():
 
 
 def symlink():
-    for j in fileslist:
+    for j in events:
+        j = j.get_old()
         if len(j) == 3:
             j, k, l = j
             todir = testroot + f"{l[0]}/{l[1]}/{div}/"
@@ -91,10 +92,10 @@ def mainmain():
         symlink()
 
 
-def main( start, dbHelper):
+def main(start, dbHelper):
     cwd = os.getcwd()
-    global fileslist, rotations
-    fileslist, rotations = dbHelper.getfileslist()
+    global events, rotations
+    events, rotations = dbHelper.events.get_event_list(), dbHelper.rotations
 
     os.chdir(start)
     delempty(".")
