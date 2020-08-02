@@ -6,7 +6,6 @@ import shutil
 import zipfile
 import os
 import re
-from .event_list import getfileslist
 
 
 def pause():
@@ -109,11 +108,11 @@ class getOutOfLoop(Exception):
     pass
 
 
-def main(eventlistfile, wd, Div, Similarity_conf, Pat1, Pat2, start):
+def main(dbHelper, wd, Div, Similarity_conf, Pat1, Pat2, start):
     cwd = os.getcwd()
     global fileslist, pat1, pat2, similarity_conf, div
     pat1, pat2, similarity_conf, div = Pat1, Pat2, Similarity_conf, Div
-    fileslist, rotations = getfileslist(eventlistfile)
+    fileslist, rotations = dbHelper.getfileslist()
     os.chdir(wd)
     for _ in range(2):
         merge_same_name()
@@ -126,14 +125,15 @@ def main(eventlistfile, wd, Div, Similarity_conf, Pat1, Pat2, start):
             delempty(".")
 
             pause()
-
-            fileslist, rotations = getfileslist(eventlistfile)
+            dbHelper.reload()
+            fileslist, rotations = dbHelper.getfileslist()
         else:
             break
 
     try:
         for _ in range(100):
-            fileslist, rotations = getfileslist(eventlistfile)
+            dbHelper.reload()
+            fileslist, rotations = dbHelper.getfileslist()
             zipa()
 
             files = getfiles() + getdirs()

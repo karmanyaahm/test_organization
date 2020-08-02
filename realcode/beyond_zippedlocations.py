@@ -5,7 +5,6 @@ import shutil
 import zipfile
 import os
 import glob
-from .event_list import getfileslist
 
 
 def initvars(divi):
@@ -92,10 +91,10 @@ def mainmain():
         symlink()
 
 
-def main(eventlistfile, start):
+def main( start, dbHelper):
     cwd = os.getcwd()
     global fileslist, rotations
-    fileslist, rotations = getfileslist(eventlistfile)
+    fileslist, rotations = dbHelper.getfileslist()
 
     os.chdir(start)
     delempty(".")

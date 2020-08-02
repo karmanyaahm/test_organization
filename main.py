@@ -9,7 +9,7 @@ if os.name == "nt":
 
 from yaml import load, FullLoader
 from prompt_toolkit.validation import Validator, ValidationError
-from prompt_toolkit.completion import FuzzyWordCompleter,WordCompleter
+from prompt_toolkit.completion import FuzzyWordCompleter, WordCompleter
 from prompt_toolkit import PromptSession, print_formatted_text
 from realcode.functions import is_division
 from datetime import date
@@ -19,13 +19,13 @@ from stringcase import titlecase
 
 ### prompt stuff ###
 DummyValidator = Validator.from_callable(lambda a: True, error_message="code broken")
-DummyCompleter=WordCompleter([])
+DummyCompleter = WordCompleter([])
 root = os.path.dirname(os.path.realpath(__file__))
 ### listinvis ###
 next_year = date.today().year + 1
 
 
-config = load(open(root+"/config.yml", "r"), Loader=FullLoader)
+config = load(open(root + "/config.yml", "r"), Loader=FullLoader)
 blocklistfile = root + "/data/testtrade.yml"
 eventlistfile = root + "/data/event_list.yml"
 
@@ -39,26 +39,32 @@ maindir = config["maindir"]
 start = maindir + "/tests/"
 wd = maindir + "/random/"
 
+dbHelper = event_list.DBHelper(eventlistfile, blocklistfile)
+
 
 def spreadsheet():
-    blocked = event_list.get_blocked(blocklistfile)
+    dbHelper.reload(blocklistfile=True)
+    blocked = dbHelper.get_blocked()
     listinvis.main(start + "bylocation/", spreadsheet_id, next_year, blocked, root)
 
 
 def beyond_zipped():
-    beyond_zippedlocations.main(eventlistfile, start)
+    beyond_zippedlocations.main(start, dbHelper)
 
 
 def randomtozip(wd, div):
-    fromrandomtozip.main(eventlistfile, wd, div, similarity_conf, pat1, pat2, start)
+    fromrandomtozip.main(dbHelper, wd, div, similarity_conf, pat1, pat2, start)
 
 
 def status():
-    blocked = event_list.get_blocked(blocklistfile)
+    dbHelper.reload()
+
+    blocked = dbHelper.get_blocked(blocklistfile)
     print(f"{len(blocked['c'])} div c invis blocked")
     print(f"{len(blocked['b'])} div b invis blocked")
     print(f"For more details look at {blocklistfile}")
-    fileslist, rotations = event_list.getfileslist(eventlistfile)
+
+    fileslist, rotations = dbHelper.getfileslist()
     print(f"{len(fileslist)} events exist in the database")
     print(
         f"{len(rotations.keys())} individual events have rotations set up which are -- {', '.join([titlecase(i) for i in list(rotations.keys())])}"
@@ -125,7 +131,9 @@ def main():
     get_help()
     while 1:
 
-        inp = term.prompt("> ", validator=DummyValidator,completer=DummyCompleter).strip()
+        inp = term.prompt(
+            "> ", validator=DummyValidator, completer=DummyCompleter
+        ).strip()
 
         if inp == "1":
             randomtestarrange(term, locations)
