@@ -59,9 +59,14 @@ def randomtozip(wd, div):
 def status():
     dbHelper.reload()
 
-    blocked = dbHelper.get_blocked(blocklistfile)
+    blocked = dbHelper.get_blocked(blocklistfile).blocked
     print(f"{len(blocked['c'])} div c invis blocked")
     print(f"{len(blocked['b'])} div b invis blocked")
+
+    blocked = dbHelper.get_blocked(blocklistfile).public
+    print(f"{len(blocked['c'])} div c invis public")
+    print(f"{len(blocked['b'])} div b invis public")
+
     print(f"For more details look at {blocklistfile}")
 
     myeventlist, rotations = dbHelper.events.event_list, dbHelper.rotations
