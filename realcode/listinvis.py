@@ -94,8 +94,8 @@ def getNumber(blocklist, yr, line):
     # for i in write.copy():
     #     if len(i[1]) == 0:
     #         write.remove(i)
-    block = blocklist["blocked"][div]
-    public = blocklist["public"][div]
+    block = blocklist.blocked[div]
+    public = blocklist.public[div]
     event = line[0]
 
     if event in block.keys():
@@ -160,8 +160,8 @@ def main(start, spreadsheet_id, next_year, blocked, root):
         key = {
             "1": "exists",
             "0": "does not exist",
-            "p": "exists and public",
-            "b": "blocked and cannot post",
+            "p": "public",
+            "b": "blocked and cannot post, maybe have",
         }
         for n, hhh in enumerate(key.items()):
             new[2 + n][len(write[0]) + 2] = hhh[0]
