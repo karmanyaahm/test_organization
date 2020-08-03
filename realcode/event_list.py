@@ -84,39 +84,6 @@ class DBHelper:
         self.rotations = rotations
 
     ### legacy compatibility ###
-    def getfileslist(self, eventlistfile="lol"):
-        fileslist = []
-
-        rotations = {}
-
-        cat = load(self.eventlistfilecontents, Loader=FullLoader)
-        for i, j in self.__events_from_dict(cat):
-            dirs = j.split("/")[1:]
-            fileslist.append(
-                (list(i["ids"]) if "ids" in i.keys() else [], dirs[-1], dirs[:-1])
-            )
-            if r := i["rotations"]:
-                rotations[dirs[-1]] = r
-        if __name__ == "__main__":
-            print(len(fileslist))
-
-        for n, i in enumerate(fileslist):
-            i = list(i)
-            i[0] = list(
-                set(
-                    list(
-                        i[0]
-                        + [i[1]]
-                        + [
-                            i[1].replace("_", " "),
-                            i[1].replace("_", ""),
-                            i[1].replace(" ", ""),
-                        ]
-                    )
-                )
-            )
-            fileslist[n] = i
-        return fileslist, rotations
 
     def get_blocked(self, blocklistfile="lol"):
         import collections
@@ -141,8 +108,9 @@ class DBHelper:
                     dct[k] = merge_dct[k]
 
         nt = load(self.blocklistfilecontents, Loader=FullLoader)
-        notrade = self.__parse_mix(nt["public"]).copy()
-        dict_merge(notrade, self.__parse_mix(nt["not_trade"]))
+        notrade = {}
+        notrade["public"] = self.__parse_mix(nt["public"]).copy()
+        notrade["blocked"] = self.__parse_mix(nt["not_trade"])
         return notrade
 
 

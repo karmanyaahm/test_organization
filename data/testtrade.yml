@@ -2,7 +2,6 @@
 
 public:
   c:
-    testexchange: [2020]
     mit: [2019, 2020]
     georgia: [2018,2019]
     umaryland: [2020]
@@ -22,7 +21,6 @@ public:
       - lambert
 
   b:
-    testexchange: [2020]
     umichigan: [2020]
     2019:
       - cobra
@@ -35,16 +33,15 @@ public:
     ufso: [2019, 2020]
     harvard: [2020]
     university_texas: [2019]
+    testexchange: [2020]
 
 
 not_trade:
   c:
-    testexchange: [2020]
     west_windsor_plainsboro_north: [2019]
 
 
   b:
-    testexchange: [2020]
     john_hopkins: [2020]
 
   bc:

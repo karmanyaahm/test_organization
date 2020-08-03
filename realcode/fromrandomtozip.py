@@ -34,13 +34,13 @@ def remove_from_string(j, vars):
 
 
 def get_real_name(string):
-    for i in fileslist:
-        for j in [i[1]] + i[0]:
+    for event in myevents:
+        for j in event.ids:
             if (
                 similar(j.lower(), string.lower()) >= similarity_conf
                 or j.lower() in string.lower()
             ):
-                return i[1]
+                return event.name
     raise EventDoesNotExist
 
 
@@ -76,9 +76,9 @@ def zipa():
 
 
 def sortfolder():
-    for j in fileslist:
-        com = j[0] + [j[1]]
-        j = j[1]
+    for event in myevents:
+        com = event.ids
+        j = event.name
         for pos in com:
             files = [f for f in glob.glob(f"*",) if os.path.isfile(f)]
             for afile in files:
@@ -110,9 +110,9 @@ class getOutOfLoop(Exception):
 
 def main(dbHelper, wd, Div, Similarity_conf, Pat1, Pat2, start):
     cwd = os.getcwd()
-    global fileslist, pat1, pat2, similarity_conf, div
+    global myevents, pat1, pat2, similarity_conf, div
     pat1, pat2, similarity_conf, div = Pat1, Pat2, Similarity_conf, Div
-    fileslist, rotations = dbHelper.getfileslist()
+    myevents, rotations = dbHelper.events.get_event_list(), dbHelper.rotations
     os.chdir(wd)
     for _ in range(2):
         merge_same_name()
@@ -126,14 +126,14 @@ def main(dbHelper, wd, Div, Similarity_conf, Pat1, Pat2, start):
 
             pause()
             dbHelper.reload()
-            fileslist, rotations = dbHelper.getfileslist()
+            myevents, rotations = dbHelper.events.get_event_list(), dbHelper.rotations
         else:
             break
 
     try:
         for _ in range(100):
             dbHelper.reload()
-            fileslist, rotations = dbHelper.getfileslist()
+            myevents, rotations = dbHelper.events.get_event_list(), dbHelper.rotations
             zipa()
 
             files = getfiles() + getdirs()

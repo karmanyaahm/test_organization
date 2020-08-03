@@ -80,12 +80,41 @@ def diff(og, write):
             print(line,)
 
 
+class NotBlockedException(Exception):
+    pass
+
+
+def getNumber(blocklist, yr, line):
+    # for event, years in blocked[div].items():
+    #     if event in invis:
+    #         for k in write:
+    #             if k[0] == event:
+    #                 k[1] = k[1] - years
+
+    # for i in write.copy():
+    #     if len(i[1]) == 0:
+    #         write.remove(i)
+    block = blocklist["blocked"][div]
+    public = blocklist["public"][div]
+    event = line[0]
+
+    if event in block.keys():
+        if yr in block[event]:
+            return "b"
+    if event in public.keys():
+        if yr in public[event]:
+            return "p"
+    if yr in line[1]:
+        return 1
+    return 0
+
+
 def main(start, spreadsheet_id, next_year, blocked, root):
     cwd = os.getcwd()
 
     spreadsheetValuesObject = sheets_stuff(spreadsheet_id, root)
     os.chdir(start)
-
+    global div
     for div in ["b", "c"]:
         #########################################################
         invis, oldest, dirs = getinvis(div)
@@ -99,22 +128,10 @@ def main(start, spreadsheet_id, next_year, blocked, root):
             write.append([i, set(arr)])
         # getting list of years for each invi
 
-        # new code
-
-        for event, years in blocked[div].items():
-            if event in invis:
-                for k in write:
-                    if k[0] == event:
-                        k[1] = k[1] - years
-
-        for i in write.copy():
-            if len(i[1]) == 0:
-                write.remove(i)
-
         for n, w in enumerate(write):
             arr = []
             for i in range(oldest, next_year):
-                arr.append(1 if i in w[1] else 0)
+                arr.append(getNumber(blocked, i, w,))
             write[n] = [w[0]] + list(arr)
         # get list of years in order
 
@@ -137,7 +154,20 @@ def main(start, spreadsheet_id, next_year, blocked, root):
         new.extend([[""] * 26] * (100 - len(new)))
         new = [line + [""] * (26 - len(line)) for line in new]
 
-        if write != og:
+        og.extend([[""] * 26] * (100 - len(og)))
+        og = [line + [""] * (26 - len(line)) for line in og]
+
+        key = {
+            "1": "exists",
+            "0": "does not exist",
+            "p": "exists and public",
+            "b": "blocked and cannot post",
+        }
+        for n, hhh in enumerate(key.items()):
+            new[2 + n][len(write[0]) + 2] = hhh[0]
+            new[2 + n][len(write[0]) + 3] = hhh[1]
+
+        if new != og:
             result = spreadsheetValuesObject.update(
                 spreadsheetId=spreadsheet_id,
                 range=range_name,
@@ -148,7 +178,7 @@ def main(start, spreadsheet_id, next_year, blocked, root):
 
         print(",".join([str(i)[2:] for i in write[0][1:]]))
 
-        diff(og, write)
+        diff(og, new)
     os.chdir(cwd)
 
 
