@@ -79,9 +79,10 @@ def sortfolder():
     for event in myevents:
         com = event.ids
         j = event.name
+        files = [f for f in glob.glob(f"*",) if os.path.isfile(f)]
+
         for pos in com:
-            files = [f for f in glob.glob(f"*",) if os.path.isfile(f)]
-            for afile in files:
+            for afile in files[:]:
                 if len(pos) < 6:
                     pattern = pat1 + pos.lower() + pat2
                 else:
@@ -93,6 +94,7 @@ def sortfolder():
                 ) and not (afile.split(".")[-1] == "zip"):
                     os.makedirs(j, exist_ok=True)
                     shutil.move(afile, j)
+                    files.remove(afile)
 
 
 def merge_same_name():
