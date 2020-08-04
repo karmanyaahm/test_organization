@@ -158,10 +158,10 @@ def main(start, spreadsheet_id, next_year, blocked, root):
         og = [line + [""] * (26 - len(line)) for line in og]
 
         key = {
-            "1": "exists",
-            "0": "does not exist",
-            "p": "public",
-            "b": "blocked and cannot post, maybe have",
+            "1": "exists in my collection",
+            "0": "does not exist in my collection",
+            "p": "public afaik (please contact me if you know otherwise)",
+            "b": "blocked and cannot post afaik (please contact me if you know otherwise), maybe have",
         }
         for n, hhh in enumerate(key.items()):
             new[2 + n][len(write[0]) + 2] = hhh[0]

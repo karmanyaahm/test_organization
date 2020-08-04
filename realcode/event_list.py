@@ -23,6 +23,7 @@ class DBHelper:
 
         if blocklistfile == True:
             self.blocklistfilecontents = open(self.blocklistfile, "r").read()
+            self.blocked = blocked(self.blocklistfilecontents)
         elif blocklistfile:
             self.blocklistfile = blocklistfile
             self.reload(blocklistfile=True)
@@ -59,7 +60,7 @@ class DBHelper:
     ### legacy compatibility ###
 
     def get_blocked(self, blocklistfile="lol"):
-        return blocked(self.blocklistfilecontents)
+        return this.blocked
 
 
 # db = DBHelper("data/event_list.yml", "data/testtrade.yml")
