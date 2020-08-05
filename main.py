@@ -17,6 +17,11 @@ import sys
 from realcode import listinvis, beyond_zippedlocations, fromrandomtozip, event_list
 from stringcase import titlecase
 
+from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5.QtCore import QThread
+from PyQt5.QtWidgets import QApplication
+
+
 ### prompt stuff ###
 DummyValidator = Validator.from_callable(lambda a: True, error_message="code broken")
 DummyCompleter = WordCompleter([])
@@ -52,8 +57,8 @@ def beyond_zipped():
     beyond_zippedlocations.main(start, dbHelper)
 
 
-def randomtozip(wd, div):
-    fromrandomtozip.main(dbHelper, wd, div, similarity_conf, pat1, pat2, start)
+def randomtozip(wd, div, thread):
+    fromrandomtozip.main(dbHelper, wd, div, similarity_conf, pat1, pat2, start, thread)
 
 
 def status():
@@ -90,74 +95,157 @@ def get_help():
     )
 
 
-def randomtestarrange(term, locations):
-    DivisionValidator = Validator.from_callable(
-        is_division, error_message="Enter either b or c", move_cursor_to_end=True
-    )
-    div = term.prompt(
-        "Division (b or c): ", validator=DivisionValidator, validate_while_typing=False
-    ).strip()
-    ## got division ##
+def randomtestarrange(term, locations, div, name, yr):
+    # DivisionValidator = Validator.from_callable(
+    #     is_division, error_message="Enter either b or c", move_cursor_to_end=True
+    # )
+    # div = term.prompt(
+    #     "Division (b or c): ", validator=DivisionValidator, validate_while_typing=False
+    # ).strip()
+    # ## got division ##
 
-    ### get list of events ###
-    locations.append(os.getcwd())
-    os.chdir(start + "bylocation/")
-    invis = set(listinvis.getinvis("b")[0] + listinvis.getinvis("c")[0])
-    os.chdir(locations.pop())
+    # ### get list of events ###
+    # locations.append(os.getcwd())
+    # os.chdir(start + "bylocation/")
+    # invis = set(listinvis.getinvis("b")[0] + listinvis.getinvis("c")[0])
+    # os.chdir(locations.pop())
 
-    ### ask for which event ###
-    event_complete = FuzzyWordCompleter(invis)
-    name = term.prompt(
-        "Name: ", completer=event_complete, validator=DummyValidator
-    ).strip()
+    # ### ask for which event ###
+    # event_complete = FuzzyWordCompleter(invis)
+    # name = term.prompt(
+    #     "Name: ", completer=event_complete, validator=DummyValidator
+    # ).strip()
 
-    def is_year(yr):
-        yr = "20" + yr
-        return int(yr) < next_year and int(yr) > 2000
+    # def is_year(yr):
+    #     yr = "20" + yr
+    #     return int(yr) < next_year and int(yr) > 2000
 
-    ## ask for year ##
-    YearValidator = Validator.from_callable(
-        is_year,
-        error_message=f"enter a number under {next_year} above 2000",
-        move_cursor_to_end=True,
-    )
-    yr = term.prompt(
-        "Year: 20", validator=YearValidator, validate_while_typing=False
-    ).strip()
-    # if someone uses this from like 2100 to 2110 you should probably fix this part to accomodate for the 90s
+    # ## ask for year ##
+    # YearValidator = Validator.from_callable(
+    #     is_year,
+    #     error_message=f"enter a number under {next_year} above 2000",
+    #     move_cursor_to_end=True,
+    # )
+    # yr = term.prompt(
+    #     "Year: 20", validator=YearValidator, validate_while_typing=False
+    # ).strip()
+    # # if someone uses this from like 2100 to 2110 you should probably fix this part to accomodate for the 90s
 
     randomtozip(wd + f"{name}-20{yr}/", div)
 
 
 def main():
+    global locations
     locations = []
     locations.append(os.getcwd())
-    term = PromptSession()
-    get_help()
-    while 1:
+    # term = PromptSession()
+    # get_help()
+    # while 1:
 
-        inp = term.prompt(
-            "> ", validator=DummyValidator, completer=DummyCompleter
-        ).strip()
+    #     inp = term.prompt(
+    #         "> ", validator=DummyValidator, completer=DummyCompleter
+    #     ).strip()
 
-        if inp == "1":
-            randomtestarrange(term, locations)
-        elif inp == "2":
-            beyond_zipped()
-            print("================ DONE ================")
+    #     if inp == "1":
+    #         randomtestarrange(term, locations)
+    #     elif inp == "2":
+    #         beyond_zipped()
+    #         print("================ DONE ================")
 
-        elif inp == "3":
-            spreadsheet()
-        elif inp == "4":
-            status()
-        elif inp == "h":
-            get_help()
-        elif inp == "q" or inp == "quit" or inp == "exit":
-            print("================ BYE ================")
-            sys.exit(0)
-        else:
-            print("Wrong Input")
+    #     elif inp == "3":
+    #         spreadsheet()
+    #     elif inp == "4":
+    #         status()
+    #     elif inp == "h":
+    #         get_help()
+    #     elif inp == "q" or inp == "quit" or inp == "exit":
+    #         print("================ BYE ================")
+    #         sys.exit(0)
+    #     else:
+    #         print("Wrong Input")
+    app = QApplication(sys.argv)
+    print(QtWidgets.QStyleFactory.keys())
+    app.setStyle("Breeze")
+    form = ExampleApp()
+    form.show()
+    app.exec_()
     os.chdir(locations.pop())
+
+
+class Stream(QtCore.QObject):
+    newText = QtCore.pyqtSignal(str)
+
+    def write(self, text):
+        self.newText.emit(str(text))
+
+
+class randtozipthread(QThread):
+    def __init__(self, div, eventname, year):
+        self.div = div
+        self.eventname = eventname
+        self.year = year
+        QThread.__init__(self)
+
+    def __del__(self):
+        self.wait()
+
+    def run(self):
+        try:
+            randomtozip(wd + f"{self.eventname}-{self.year}/", self.div, self)
+            print(f"{self.eventname}-{self.year} done")
+
+        except FileNotFoundError:
+            print(wd + f"{self.eventname}-{self.year}/")
+
+    def pause(self):
+        # print("pause")
+        self.q_view_dlg = QtWidgets.QDialog()
+        # print("2")
+        self.q_view_dlg = uic.loadUi(root + "/realcode/gui/continue.ui")
+        # print("3")
+        self.q_view_dlg.exec_()
+
+
+def getEventNameAutocomplete() -> list:
+    locations.append(os.getcwd())
+    os.chdir(start + "bylocation/")
+    invis = set(listinvis.getinvis("b")[0] + listinvis.getinvis("c")[0])
+    os.chdir(locations.pop())
+    return list(invis)
+
+
+class ExampleApp(QtWidgets.QMainWindow):
+    def __init__(self, parent=None):
+        super(ExampleApp, self).__init__(parent)
+
+        uic.loadUi("realcode/gui/gui.ui", self)
+        sys.stdout = Stream(newText=self.onUpdateText)
+        self.process = self.textEdit
+        self.eventName.setCompleter(
+            completer := QtWidgets.QCompleter(getEventNameAutocomplete())
+        )
+        completer.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
+
+    def onUpdateText(self, text):
+        cursor = self.process.textCursor()
+        cursor.movePosition(QtGui.QTextCursor.End)
+        cursor.insertText(text)
+        self.process.setTextCursor(cursor)
+        self.process.ensureCursorVisible()
+
+    def __del__(self):
+        sys.stdout = sys.__stdout__
+
+    def randtozip(self):
+        self.get_thread = randtozipthread(
+            str(self.pickDiv.currentText()),
+            str(self.eventName.text()),
+            int(self.year.value()),
+        )
+        self.get_thread.start()
+
+    def pressEnter(self):
+        sys.stdin.write("\n")
 
 
 if __name__ == "__main__":

@@ -8,8 +8,9 @@ import os
 import re
 
 
-def pause():
-    input("Fix files and press enter to continue")
+def pause(thread):
+    #input("Fix files and press enter to continue")
+    thread.pause()
 
 
 class EventDoesNotExist(Exception):
@@ -110,7 +111,7 @@ class getOutOfLoop(Exception):
     pass
 
 
-def main(dbHelper, wd, Div, Similarity_conf, Pat1, Pat2, start):
+def main(dbHelper, wd, Div, Similarity_conf, Pat1, Pat2, start,thread):
     cwd = os.getcwd()
     global myevents, pat1, pat2, similarity_conf, div
     pat1, pat2, similarity_conf, div = Pat1, Pat2, Similarity_conf, Div
@@ -126,7 +127,7 @@ def main(dbHelper, wd, Div, Similarity_conf, Pat1, Pat2, start):
             sortfolder()
             delempty(".")
 
-            pause()
+            pause(thread)
             dbHelper.reload()
             myevents, rotations = dbHelper.events.get_event_list(), dbHelper.rotations
         else:
@@ -147,7 +148,7 @@ def main(dbHelper, wd, Div, Similarity_conf, Pat1, Pat2, start):
             if allzip:
                 break
 
-            pause()
+            pause(thread)
 
     except getOutOfLoop:
         pass

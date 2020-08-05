@@ -8,3 +8,5 @@ commented_event_list.txt
 build
 dist
 *.spec
+.venv/*
+
