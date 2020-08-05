@@ -60,7 +60,7 @@ class DBHelper:
     ### legacy compatibility ###
 
     def get_blocked(self, blocklistfile="lol"):
-        return this.blocked
+        return self.blocked
 
 
 # db = DBHelper("data/event_list.yml", "data/testtrade.yml")
