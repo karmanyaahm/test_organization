@@ -9,7 +9,7 @@ import re
 
 
 def pause(thread):
-    #input("Fix files and press enter to continue")
+    # input("Fix files and press enter to continue")
     thread.pause()
 
 
@@ -111,10 +111,18 @@ class getOutOfLoop(Exception):
     pass
 
 
-def main(dbHelper, wd, Div, Similarity_conf, Pat1, Pat2, start,thread):
+def main(dbHelper, wd, Div, main_info, thread):
     cwd = os.getcwd()
+
+
     global myevents, pat1, pat2, similarity_conf, div
-    pat1, pat2, similarity_conf, div = Pat1, Pat2, Similarity_conf, Div
+    pat1, pat2, similarity_conf, div, start = (
+        main_info.pat1,
+        main_info.pat2,
+        main_info.similarity_conf,
+        Div,
+        main_info.start,
+    )
     myevents, rotations = dbHelper.events.get_event_list(), dbHelper.rotations
     os.chdir(wd)
     for _ in range(2):

@@ -109,8 +109,11 @@ def getNumber(blocklist, yr, line):
     return 0
 
 
-def main(start, spreadsheet_id, next_year, blocked, root):
+def main(start, main_info, blocked):
     cwd = os.getcwd()
+    spreadsheet_id = main_info.spreadsheet_id
+    next_year = main_info.next_year
+    root = main_info.root
 
     spreadsheetValuesObject = sheets_stuff(spreadsheet_id, root)
     os.chdir(start)

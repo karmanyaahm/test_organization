@@ -50,7 +50,7 @@ dbHelper = event_list.DBHelper(main_info.eventlistfile, main_info.blocklistfile)
 def spreadsheet():
     dbHelper.reload(blocklistfile=True)
     blocked = dbHelper.get_blocked()
-    listinvis.main(main_info.start + "bylocation/", main_info.spreadsheet_id, main_info.next_year, blocked, main_info.root)
+    listinvis.main(main_info.start + "bylocation/", main_info, blocked)
 
 
 def beyond_zipped():
@@ -58,28 +58,34 @@ def beyond_zipped():
 
 
 def randomtozip(wd, div, thread):
-    fromrandomtozip.main(dbHelper, wd, div, main_info.similarity_conf, main_info.pat1, main_info.pat2, main_info.start, thread)
+    fromrandomtozip.main(
+        dbHelper,
+        wd,
+        div,
+        main_info,
+        thread,
+    )
 
 
 def status():
     dbHelper.reload()
 
-    blocked = dbHelper.get_blocked(blocklistfile).blocked
+    blocked = dbHelper.get_blocked(main_info.blocklistfile).blocked
     print(f"{len(blocked['c'])} div c invis blocked")
     print(f"{len(blocked['b'])} div b invis blocked")
 
-    blocked = dbHelper.get_blocked(blocklistfile).public
+    blocked = dbHelper.get_blocked(main_info.blocklistfile).public
     print(f"{len(blocked['c'])} div c invis public")
     print(f"{len(blocked['b'])} div b invis public")
 
-    print(f"For more details look at {blocklistfile}")
+    print(f"For more details look at {main_info.blocklistfile}")
 
     myeventlist, rotations = dbHelper.events.event_list, dbHelper.rotations
     print(f"{len(myeventlist)} events exist in the database")
     print(
         f"{len(rotations.keys())} individual events have rotations set up which are -- {', '.join([titlecase(i) for i in list(rotations.keys())])}"
     )
-    print(f"For more details look at {eventlistfile}")
+    print(f"For more details look at {main_info.eventlistfile}")
 
 
 def get_help():
