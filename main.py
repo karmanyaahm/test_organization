@@ -25,40 +25,40 @@ from PyQt5.QtWidgets import QApplication
 ### prompt stuff ###
 DummyValidator = Validator.from_callable(lambda a: True, error_message="code broken")
 DummyCompleter = WordCompleter([])
-root = os.path.dirname(os.path.realpath(__file__))
-### listinvis ###
-next_year = date.today().year + 1
 
 
-config = load(open(root + "/config.yml", "r"), Loader=FullLoader)
-blocklistfile = root + "/data/testtrade.yml"
-eventlistfile = root + "/data/event_list.yml"
+class main_info:
+    root = os.path.dirname(os.path.realpath(__file__))
+    next_year = date.today().year + 1
+    config = load(open(root + "/config.yml", "r"), Loader=FullLoader)
+    blocklistfile = root + "/data/testtrade.yml"
+    eventlistfile = root + "/data/event_list.yml"
+    pat1 = "(?:[0-9]|\\b|_)("
+    pat2 = ")(?:[0-9]|\\b|_)"
+    similarity_conf = config["similarity_conf"]
+    spreadsheet_id = config["spreadsheet_id"]
+    maindir = config["maindir"]
+    start = maindir + "/tests/"
+    wd = maindir + "/random/"
 
-pat1 = "(?:[0-9]|\\b|_)("
-pat2 = ")(?:[0-9]|\\b|_)"
 
+main_info = main_info()
 
-similarity_conf = config["similarity_conf"]
-spreadsheet_id = config["spreadsheet_id"]
-maindir = config["maindir"]
-start = maindir + "/tests/"
-wd = maindir + "/random/"
-
-dbHelper = event_list.DBHelper(eventlistfile, blocklistfile)
+dbHelper = event_list.DBHelper(main_info.eventlistfile, main_info.blocklistfile)
 
 
 def spreadsheet():
     dbHelper.reload(blocklistfile=True)
     blocked = dbHelper.get_blocked()
-    listinvis.main(start + "bylocation/", spreadsheet_id, next_year, blocked, root)
+    listinvis.main(main_info.start + "bylocation/", main_info.spreadsheet_id, main_info.next_year, blocked, main_info.root)
 
 
 def beyond_zipped():
-    beyond_zippedlocations.main(start, dbHelper)
+    beyond_zippedlocations.main(main_info.start, dbHelper)
 
 
 def randomtozip(wd, div, thread):
-    fromrandomtozip.main(dbHelper, wd, div, similarity_conf, pat1, pat2, start, thread)
+    fromrandomtozip.main(dbHelper, wd, div, main_info.similarity_conf, main_info.pat1, main_info.pat2, main_info.start, thread)
 
 
 def status():
@@ -191,11 +191,12 @@ class randtozipthread(QThread):
 
     def run(self):
         try:
-            randomtozip(wd + f"{self.eventname}-{self.year}/", self.div, self)
+            randomtozip(main_info.wd + f"{self.eventname}-{self.year}/", self.div, self)
             print(f"{self.eventname}-{self.year} done")
 
         except FileNotFoundError:
-            print(wd + f"{self.eventname}-{self.year}/")
+            print(main_info.wd + f"{self.eventname}-{self.year}/")
+        print("=======================")
 
     def pause(self):
         # print("pause")
@@ -206,9 +207,35 @@ class randtozipthread(QThread):
         self.q_view_dlg.exec_()
 
 
+class beyondzipthread(QThread):
+    def __init__(self,):
+        QThread.__init__(self)
+
+    def __del__(self):
+        self.wait()
+
+    def run(self):
+        beyond_zipped()
+        print("Arrange beyond zip done")
+        print("=======================")
+
+
+class spreadsheetupthread(QThread):
+    def __init__(self,):
+        QThread.__init__(self)
+
+    def __del__(self):
+        self.wait()
+
+    def run(self):
+        spreadsheet()
+        print("Spreadsheet upload done")
+        print("=======================")
+
+
 def getEventNameAutocomplete() -> list:
     locations.append(os.getcwd())
-    os.chdir(start + "bylocation/")
+    os.chdir(main_info.start + "bylocation/")
     invis = set(listinvis.getinvis("b")[0] + listinvis.getinvis("c")[0])
     os.chdir(locations.pop())
     return list(invis)
@@ -244,8 +271,13 @@ class ExampleApp(QtWidgets.QMainWindow):
         )
         self.get_thread.start()
 
-    def pressEnter(self):
-        sys.stdin.write("\n")
+    def beyondzip(self):
+        self.get_thread = beyondzipthread()
+        self.get_thread.start()
+
+    def spreadsheetup(self):
+        self.get_thread = spreadsheetupthread()
+        self.get_thread.start()
 
 
 if __name__ == "__main__":
