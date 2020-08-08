@@ -99,10 +99,12 @@ class ExampleApp(QtWidgets.QMainWindow):
 
 
 class qt_gui(gui):
-    def start(self, MVC):
+    def __init__(self, MVC):
         global mvc, main_info
         mvc, main_info = MVC, MVC.main_info
+        self.mvc = MVC
 
+    def start(self):
         app = QApplication(sys.argv)
         # print(QtWidgets.QStyleFactory.keys())
         # app.setStyle("Breeze")

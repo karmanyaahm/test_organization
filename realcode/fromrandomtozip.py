@@ -9,7 +9,6 @@ import re
 
 
 def pause():
-    # input("Fix files and press enter to continue")
     mvc.pause()
 
 

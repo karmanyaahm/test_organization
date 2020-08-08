@@ -8,15 +8,11 @@ if os.name == "nt":
     exit(69)
 
 from yaml import load, FullLoader
-
-from realcode.functions import is_division
 from datetime import date
-import sys
-from stringcase import titlecase
 from realcode.mvc import mvc
 
 
-class main_info:
+class mainInfo:
     root = os.path.dirname(os.path.realpath(__file__))
     next_year = date.today().year + 1
     config = load(open(root + "/config.yml", "r"), Loader=FullLoader)
@@ -32,16 +28,12 @@ class main_info:
     locations = []
 
 
-main_info = main_info()
+main_info = mainInfo()
 
 
 def main():
-    global locations
-    locations = main_info.locations
-    locations.append(os.getcwd())
-    thismvc = mvc(main_info, "qt")
+    thismvc = mvc(main_info, main_info.config["ui"])
     thismvc.start()
-    os.chdir(locations.pop())
 
 
 if __name__ == "__main__":
