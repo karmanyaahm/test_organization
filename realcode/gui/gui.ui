@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>537</width>
-    <height>629</height>
+    <height>544</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -147,7 +147,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="button1">
+        <widget class="QPushButton" name="afterZipButton">
          <property name="toolTip">
           <string>tooltip</string>
          </property>
@@ -187,7 +187,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="spreadsheetButton">
          <property name="text">
           <string>3 - spreadsheet upload</string>
          </property>
@@ -231,11 +231,45 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>afterZipButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>beyondzip()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>267</x>
+     <y>103</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>411</x>
+     <y>127</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spreadsheetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>spreadsheetup()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>335</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>389</x>
+     <y>169</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1(bool)</signal>
   <slot>slot1()</slot>
   <slot>randtozip()</slot>
   <slot>pressEnter()</slot>
+  <slot>beyondzip()</slot>
+  <slot>spreadsheetup()</slot>
  </slots>
 </ui>
