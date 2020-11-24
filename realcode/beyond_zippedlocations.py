@@ -57,11 +57,15 @@ def symlink():
         else:
             print(f"update {j[1]}")
 
+class DataIncompleteException(Exception):
+    def __init__(self, message):
+        print(message)
 
 def get_category_from_year(event, year):
     for j, k in rotations[event].items():
         if year in k:
             return j
+    raise DataIncompleteException(str(event)+':'+str(year))
 
 
 def dorotations():

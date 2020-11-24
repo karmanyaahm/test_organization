@@ -14,7 +14,7 @@ from realcode.mvc import mvc
 
 class mainInfo:
     root = os.path.dirname(os.path.realpath(__file__))
-    next_year = date.today().year + 1
+    next_year = date.today().year + 2
     config = load(open(root + "/config.yml", "r"), Loader=FullLoader)
     blocklistfile = root + "/data/testtrade.yml"
     eventlistfile = root + "/data/event_list.yml"
@@ -38,4 +38,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
