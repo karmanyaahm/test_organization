@@ -20,11 +20,11 @@ def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
 
 
-def zipdir(path, ziph):
-    # ziph is zipfile handle
-    for root, _, files in os.walk(path):
-        for file in files:
-            ziph.write(os.path.join(root, file))
+# def zipdir(path, ziph):
+#     # ziph is zipfile handle
+#     for root, _, files in os.walk(path):
+#         for filee in files:
+#             ziph.write(os.path.join(root, filee))
 
 
 def remove_from_string(j, vars):
@@ -36,9 +36,13 @@ def remove_from_string(j, vars):
 def get_real_name(string):
     for event in myevents:
         for j in event.ids:
-            if (
-                similar(j.lower(), string.lower()) >= similarity_conf
-                or j.lower() in string.lower()
+            if len(j) < 6:
+                pattern = pat1 + j.lower() + pat2
+            else:
+                pattern = pat1 + ".*" + j.lower() + ".*" + pat2
+
+            if similar(j.lower(), string.lower()) >= similarity_conf or re.search(
+                pattern, string, re.IGNORECASE | re.MULTILINE
             ):
                 return event.name
     raise EventDoesNotExist
@@ -68,18 +72,19 @@ def zipa():
         #     j = inp
         # print()
         else:
-            name = f"{os.path.basename(os.getcwd())}-{j}-{div}.zip"
+            name = f"{os.path.basename(os.getcwd())}-{j}-{div}.test"
 
-            with zipfile.ZipFile(name, "w", zipfile.ZIP_DEFLATED) as zipf:
-                zipdir(i, zipf)
-            shutil.rmtree(i)
+            # with zipfile.ZipFile(name, "w", zipfile.ZIP_DEFLATED) as zipf:
+            #     zipdir(i, zipf)
+            # shutil.rmtree(i)
+            os.rename(i, name)
 
 
 def sortfolder():
     for event in myevents:
         com = event.ids
         j = event.name
-        files = [f for f in glob.glob(f"*",) if os.path.isfile(f)]
+        files = [f for f in glob.glob(f"*",) if os.path.isdir(f)]
 
         for pos in com:
             for afile in files[:]:
@@ -91,7 +96,7 @@ def sortfolder():
                     re.search(
                         pattern, os.path.basename(afile), re.IGNORECASE | re.MULTILINE
                     )
-                ) and not (afile.split(".")[-1] == "zip"):
+                ) and not (afile.split(".")[-1] == "test"):
                     os.makedirs(j, exist_ok=True)
                     shutil.move(afile, j)
                     files.remove(afile)
@@ -132,8 +137,10 @@ def main(wd, Div, MVC):
         delempty(".")
 
     for _ in range(100):
-        if len([fi for fi in getfiles() if ".zip" not in fi]) > 0:
+        if len([fi for fi in getfiles()]) > 0:
             merge_same_name()
+            pause()
+
             sortfolder()
             delempty(".")
 
@@ -152,7 +159,7 @@ def main(wd, Div, MVC):
             files = getfiles() + getdirs()
             allzip = True
             for i in files:
-                if ".zip" not in i:
+                if ".test" not in i:
                     allzip &= False
 
             if allzip:

@@ -45,12 +45,10 @@ def sheets_stuff(spreadsheet_id, root):
 
 
 def getinvis(div):
-    """
-    chdir into start before running this method
-    """
-    os.chdir(f"good-{div}")
+    a = os.getcwd()
+    os.chdir(f"../organized_by_invitational-{div}")
     dirs = [ddir[2:] for ddir in getdirs()]
-    os.chdir("..")
+    os.chdir(a)
     # got list of invis
 
     dirs = [this.split("-") for this in dirs]
@@ -109,14 +107,13 @@ def getNumber(blocklist, yr, line):
     return 0
 
 
-def main(start, main_info, blocked):
+def main( main_info, blocked):
     cwd = os.getcwd()
     spreadsheet_id = main_info.spreadsheet_id
     next_year = main_info.next_year
     root = main_info.root
 
     spreadsheetValuesObject = sheets_stuff(spreadsheet_id, root)
-    os.chdir(start)
     global div
     for div in ["b", "c"]:
         #########################################################

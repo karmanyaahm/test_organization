@@ -1,41 +1,40 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {
-		"files.exclude": {
-			"__pycache__": true,
-			".git*": true,
-			".venv": true,
-			".vscode": true,
-			"*.workspace": true
-		},
-		"files.watcherExclude": {
-			".venv": true,
-			"**/__pycache__": true,
-			"build": true
-		}
-	},
-	"launch": {
-		"version": "0.2.0",
-		"configurations": [
-		
-			{
-				"name": "Python: Current File",
-				"type": "python",
-				"request": "launch",
-				"program": "${file}",
-				"console": "integratedTerminal"
-			}
-		
-		,		{
-			"name": "Python: Main",
-			"type": "python",
-			"request": "launch",
-			"program": "main.py",
-			"console": "integratedTerminal"
-		}]
-	}
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "python.pythonPath": "/run/media/karmanyaahm/scioly/oldstff/tests/code/.venv/bin/python3",
+    "python.formatting.provider": "black",
+    "files.exclude": {
+      ".git*": true,
+      ".vscode": true,
+      "*.workspace": true
+    },
+    "files.watcherExclude": {
+      "**/__pycache__": true,
+      "build": true
+    }
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Python: Current File",
+        "type": "python",
+        "request": "launch",
+        "program": "${file}",
+        "console": "integratedTerminal"
+      },
+
+      {
+        "name": "Python: Main",
+        "type": "python",
+        "request": "launch",
+        "program": "main.py",
+        "console": "integratedTerminal"
+      }
+    ]
+  }
 }

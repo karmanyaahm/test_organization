@@ -37,7 +37,7 @@ class mvc:
     def spreadsheet(self):
         self.dbHelper.reload(blocklistfile=True)
         blocked = self.dbHelper.get_blocked()
-        listinvis.main(self.main_info.start + "bylocation/", self.main_info, blocked)
+        listinvis.main( self.main_info, blocked)
 
     def beyond_zipped(self):
         beyond_zippedlocations.main(self.main_info.start, self.dbHelper)
@@ -48,9 +48,7 @@ class mvc:
     def getEventNameAutocomplete(self,) -> list:
         main_info = self.main_info
         main_info.locations.append(os.getcwd())
-        os.chdir(main_info.start + "bylocation/")
         invis = set(listinvis.getinvis("b")[0] + listinvis.getinvis("c")[0])
-        os.chdir(main_info.locations.pop())
         return list(invis)
 
     def leave(self, code=0):
