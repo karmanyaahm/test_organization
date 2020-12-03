@@ -84,7 +84,7 @@ def sortfolder():
     for event in myevents:
         com = event.ids
         j = event.name
-        files = [f for f in glob.glob(f"*",) if os.path.isdir(f)]
+        files = [f for f in glob.glob(f"*",) ]
 
         for pos in com:
             for afile in files[:]:
@@ -139,7 +139,6 @@ def main(wd, Div, MVC):
     for _ in range(100):
         if len([fi for fi in getfiles()]) > 0:
             merge_same_name()
-            pause()
 
             sortfolder()
             delempty(".")
