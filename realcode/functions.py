@@ -38,6 +38,6 @@ def getzips(inpdir="."):
     return [
         os.path.basename(f.path)
         for f in os.scandir(inpdir)
-        if f.is_file() and os.path.basename(f.path).split(".")[1] == "zip"
+        if ('.' in os.path.basename(f.path)) and os.path.basename(f.path).split(".")[1] == "test"
     ]
 

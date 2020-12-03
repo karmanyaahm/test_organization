@@ -11,8 +11,8 @@ def initvars(divi):
     global byevent
     global testroot
     global div
-    byevent = f"byevent-{divi}/"
-    testroot = "actualtests/"
+    byevent = f"organized_by_event-{divi}/"
+    testroot = "organized_by_category-all/"
     div = divi
 
 
@@ -23,7 +23,7 @@ def move():
         j = event.ids
         ki = byevent + k
         os.makedirs(ki, exist_ok=True)
-        files = glob.glob(f"bylocation/good-{div}/*/*-{k}-*", recursive=True)
+        files = glob.glob(f"organized_by_invitational-{div}/*/*-{k}-*", recursive=True)
         for i in files:
             try:
                 os.symlink(f"../../{i}", byevent + f"{k}/{os.path.split(i)[1]}")
@@ -75,9 +75,9 @@ def dorotations():
             os.chdir(todir)
             zips = getzips()
             for category in rotations[event].keys():
-                os.makedirs("by_category-" + category, exist_ok=True)
+                os.makedirs("organized_by_category-" + category, exist_ok=True)
             for thiszip in getzips():
-                cat = "by_category-" + get_category_from_year(
+                cat = "organized_by_category-" + get_category_from_year(
                     event, int(thiszip.split("-")[1])
                 )
                 try:
