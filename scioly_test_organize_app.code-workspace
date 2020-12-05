@@ -34,7 +34,14 @@
         "request": "launch",
         "program": "main.py",
         "console": "integratedTerminal"
-      }
+      },
+      {
+        "name": "main.go",
+        "type": "go",
+        "request": "launch",
+        "mode": "auto",
+        "program": "main.go"
+    },
     ]
   }
 }
