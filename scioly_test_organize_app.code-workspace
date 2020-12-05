@@ -5,8 +5,7 @@
     }
   ],
   "settings": {
-    "python.pythonPath": "/run/media/karmanyaahm/scioly/oldstff/tests/code/.venv/bin/python3",
-    "python.formatting.provider": "black",
+    "go.inferGopath": true,
     "files.exclude": {
       ".git*": true,
       ".vscode": true,
@@ -21,6 +20,14 @@
     "version": "0.2.0",
     "configurations": [
       {
+        "name": "main.go",
+        "type": "go",
+        "request": "launch",
+        "mode": "auto",
+        "program": "main.go",
+        "args": []
+      },
+      {
         "name": "Python: Current File",
         "type": "python",
         "request": "launch",
@@ -34,14 +41,7 @@
         "request": "launch",
         "program": "main.py",
         "console": "integratedTerminal"
-      },
-      {
-        "name": "main.go",
-        "type": "go",
-        "request": "launch",
-        "mode": "auto",
-        "program": "main.go"
-    },
+      }
     ]
   }
 }
