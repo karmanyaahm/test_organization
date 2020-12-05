@@ -5,7 +5,6 @@
     }
   ],
   "settings": {
-    "go.inferGopath": true,
     "files.exclude": {
       ".git*": true,
       ".vscode": true,

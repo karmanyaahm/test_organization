@@ -3,7 +3,7 @@ package db
 import (
 	"io/ioutil"
 	"log"
-	"models"
+	"github.com/karmanyaahm/test_organization/models"
 
 	"gopkg.in/yaml.v2"
 )
@@ -43,7 +43,7 @@ func Reload() []models.Event {
 					}
 				}
 
-				e := models.Event{Name: m, Category: []string{i, k}}
+				e := models.MakeEvent(name: m, category: []string{i, k})
 				e.Rotations = rotations
 				e.AddIds(n.Ids)
 
