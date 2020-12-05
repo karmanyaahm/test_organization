@@ -11,7 +11,7 @@ type Event struct {
 }
 
 //AddIds to the struct
-func (e Event) AddIds(ids []string) {
+func (e *Event) AddIds(ids []string) {
 	a := map[string]bool{}
 
 	for _, k := range e.ids {
@@ -28,7 +28,7 @@ func (e Event) AddIds(ids []string) {
 }
 
 //GetIds getids
-func (e Event) GetIds() []string {
+func (e *Event) GetIds() []string {
 	return e.ids
 }
 

@@ -2,7 +2,7 @@
 
 > Version 1.1, December 2016
 
-> Copyright (C) 2020 Beachwood Science Olympiad
+> Copyright (C) 2020 Karmanyaah Malhotra
  
  Everyone is permitted to copy and distribute verbatim or modified
  copies of this license document.

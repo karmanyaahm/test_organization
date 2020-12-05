@@ -16,4 +16,9 @@ func TestReload(t *testing.T) {
 	for _,i := range a{
 		t.Log(i.Name)
 	}
+	if !(20 < len(a) && len(a) < 300) {
+		t.Fail()
+	}
+	t.Logf("len %d", len(a))
+
 }
