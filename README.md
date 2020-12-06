@@ -77,3 +77,12 @@ diff t s -y |grep '<' | grep zip |wc -l
 rm s t
 ```
 `find ./bylocation/good-c/  -maxdepth 2 -type f   -printf "%f\n" |sort > t ; find ./byevent-c/  -maxdepth 2 -type l   -printf "%f\n" |sort > s ; diff t s -y |grep '<' | grep zip `
+
+```bash
+ find organized_by_invitational-c/*/ -type f -name *.zip -exec sh -c '
+mkdir ${1::-4}.test
+bsdtar -C ${1::-4}.test -xf $1 -s"|[^/]*/||"
+rm $1 -f
+' find-sh {} \;
+```
+Unzip everything and move it to dir.test
