@@ -1,7 +1,8 @@
 package db
 
 import (
-	"fmt"
+	"github.com/karmanyaahm/test_organization/config"
+	"errors"
 	"io/ioutil"
 	"log"
 
@@ -10,15 +11,9 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-var eventListFile, blockListFile string
+var EventList []models.Event
 
-//Load loads filenames and tries to parse them with Reload
-func Load(eventlistfile, blocklistfile string) []models.Event {
-	eventListFile = eventlistfile
-	fmt.Println(eventlistfile)
-	blockListFile = blocklistfile
-	return Reload()
-}
+
 
 type event struct {
 	Ids       []string
@@ -31,7 +26,7 @@ type t struct {
 }
 
 //Reload reloads info
-func Reload() []models.Event {
+func Reload() {
 	ans := make([]models.Event, 0, 100)
 
 	t := readFileToStructs()
@@ -50,7 +45,11 @@ func Reload() []models.Event {
 			}
 		}
 	}
-	return ans
+	EventList = ans
+
+	if len(EventList)<1{
+		panic(errors.New("Event List Reload Failed"))
+	}
 }
 
 func parseEvent(i, k, m string, n event) models.Event {
@@ -69,10 +68,13 @@ func parseEvent(i, k, m string, n event) models.Event {
 }
 
 func readFileToStructs() t {
-	data, _ := ioutil.ReadFile("../data/event_list.yml")
+	data, err := ioutil.ReadFile(config.DataPath)
+	if err != nil {
+		panic(errors.New("Wrong Event File Path Configured"))
+	}
 	out := t{}
 
-	err := yaml.Unmarshal(data, &out)
+	err = yaml.Unmarshal(data, &out)
 	if err != nil {
 		log.Fatalf("cannot unmarshal data: %v", err)
 	}

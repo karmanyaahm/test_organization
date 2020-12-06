@@ -6,11 +6,12 @@ type Config struct {
 	Root string
 }
 
+var DataPath string
 
 //Conf returns the config
 func Conf() Config {
 	config := Config{Root: "a"}
-
+	DataPath = "/run/media/karmanyaahm/scioly/oldstff/tests/code/data/event_list.yml"
 	return config
 
 	// var configPath string
@@ -19,5 +20,5 @@ func Conf() Config {
 	// flag.Parse()
 
 	// fmt.Println("word:", configPath)
-	
+
 }

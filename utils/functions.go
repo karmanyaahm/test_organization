@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"regexp"
 	"errors"
+	"regexp"
 
 	"github.com/karmanyaahm/test_organization/models"
 )
@@ -24,13 +24,13 @@ func FindEventByFuzzyName(eventlist []models.Event, val string) (models.Event, e
 
 	for _, event := range eventlist {
 		for _, id := range event.GetIds() {
-			regex := "(?:[0-9]|\\b|_)(" + id + ")(?:[0-9]|\\b|_)"
+			regex := "(?i)" + "(?:[0-9]|\\b|_)(" + id + ")(?:[0-9]|\\b|_)"
 
 			re := regexp.MustCompile(regex)
-			 if len(re.FindStringSubmatch(val))>0{
-				 ans = append(ans, event)
-				 break
-			 }
+			if len(re.FindStringSubmatch(val)) > 0 {
+				ans = append(ans, event)
+				break
+			}
 		}
 	}
 
