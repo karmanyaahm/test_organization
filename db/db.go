@@ -1,10 +1,11 @@
 package db
 
 import (
-	"github.com/karmanyaahm/test_organization/config"
 	"errors"
 	"io/ioutil"
 	"log"
+
+	"github.com/karmanyaahm/test_organization/config"
 
 	"github.com/karmanyaahm/test_organization/models"
 
@@ -12,8 +13,6 @@ import (
 )
 
 var EventList []models.Event
-
-
 
 type event struct {
 	Ids       []string
@@ -47,7 +46,7 @@ func Reload() {
 	}
 	EventList = ans
 
-	if len(EventList)<1{
+	if len(EventList) < 1 {
 		panic(errors.New("Event List Reload Failed"))
 	}
 }
@@ -56,7 +55,7 @@ func parseEvent(i, k, m string, n event) models.Event {
 
 	rotations := map[int]string{}
 	for o, p := range n.Rotations { //rotation parsing
-		for q := range p {
+		for _, q := range p {
 			rotations[q] = o
 		}
 	}

@@ -42,3 +42,13 @@ func FindEventByFuzzyName(eventlist []models.Event, val string) (models.Event, e
 		return ans[0], errors.New("Too Many")
 	}
 }
+
+func GetEventRotationInfo(eventlist []models.Event) map[string]map[int]string {
+	ans := map[string]map[int]string{}
+	for _, event := range eventlist {
+		if len(event.Rotations) > 0 {
+			ans[event.Name] = event.Rotations
+		}
+	}
+	return ans
+}
