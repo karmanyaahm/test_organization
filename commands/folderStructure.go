@@ -1,12 +1,13 @@
 package commands
 
 import (
-	"github.com/karmanyaahm/test_organization/db"
 	"fmt"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/karmanyaahm/test_organization/db"
 
 	"github.com/karmanyaahm/test_organization/config"
 )
@@ -36,10 +37,17 @@ func FolderStructureByEvent(div string) {
 
 	makeEventPaths(targetpath, pathMap)
 
-	symlinkThings(targetpath, pathMap)events
+	symlinkThings(targetpath, pathMap)
 
-
-	fmt.Println("ha")
+	l1, err := filepath.Rel(config.CallPath, scanpath)
+	if err != nil {
+		fmt.Println(err)
+	}
+	l2, err := filepath.Rel(config.CallPath, targetpath)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Printf("%s mapped to %s\n", l1, l2)
 
 }
 func symlinkThings(targetpath string, pathMap map[string]string) {

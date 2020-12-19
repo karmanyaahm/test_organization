@@ -1,6 +1,7 @@
 package config
 
 import (
+	"os"
 	"path/filepath"
 	"strings"
 )
@@ -12,12 +13,14 @@ type Config struct {
 
 var DataPath string
 var RootPath string
+var CallPath string
 
 //Conf returns the config
 func Conf() Config {
 	config := Config{Root: "a"}
 	DataPath = "/run/media/karmanyaahm/scioly/oldstff/tests/code/data/event_list.yml"
 	RootPath = "/run/media/karmanyaahm/scioly/oldstff/tests"
+	CallPath, _ = os.Getwd()
 	return config
 
 	// var configPath string
