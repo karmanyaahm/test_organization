@@ -22,6 +22,7 @@ var randomToZipSortDir string
 var div string
 
 var sortByEvent *flaggy.Subcommand
+var disableRotations bool
 
 func init() {
 	flaggy.SetName("Scioly Test Organizer")
@@ -41,6 +42,7 @@ func init() {
 	sortByEvent = flaggy.NewSubcommand("byEvent")
 	sortByEvent.Description = "Sort tests into per event folders"
 	sortByEvent.AddPositionalValue(&div, "Division", 1, true, "b or c")
+	sortByEvent.Bool(&disableRotations, "", "norotation", "*Disable* rotation sorting (default enabled)")
 
 	flaggy.AttachSubcommand(randomToZip, 1)
 	flaggy.AttachSubcommand(sortByEvent, 1)
@@ -86,6 +88,9 @@ func main() {
 
 	} else if sortByEvent.Used {
 		commands.FolderStructureByEvent(div)
+		if !disableRotations {
+			commands.Rotations(div)
+		}
 	} else {
 		flaggy.ShowHelpAndExit("Unexpected Command")
 	}

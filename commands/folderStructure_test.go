@@ -9,7 +9,14 @@ import (
 
 func TestByEvent(t *testing.T) {
 	config.DefaultConfig()
-	config.RootPath ,_= filepath.Abs("../tests/folderStructure/")
+	config.RootPath, _ = filepath.Abs("../tests/folderStructure/")
 
 	FolderStructureByEvent("c")
+}
+
+func TestRotation(t *testing.T) {
+
+	TestByEvent(t)
+	Rotations("c")
+
 }
