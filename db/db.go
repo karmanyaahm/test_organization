@@ -8,6 +8,7 @@ import (
 	"github.com/karmanyaahm/test_organization/config"
 
 	"github.com/karmanyaahm/test_organization/models"
+	"github.com/karmanyaahm/test_organization/utils"
 
 	"gopkg.in/yaml.v2"
 )
@@ -15,6 +16,7 @@ import (
 var EventList []models.Event
 
 type event struct {
+	FancyName string `yaml:"fancy_name"`
 	Ids       []string
 	Rotations map[string][]int
 	First     bool
@@ -35,7 +37,6 @@ func Reload() {
 			for m, n := range l { // events in that category
 
 				e := parseEvent(i, k, m, n)
-
 				if n.First {
 					ans = insert(ans, e, 0)
 				} else {
@@ -59,8 +60,10 @@ func parseEvent(i, k, m string, n event) models.Event {
 			rotations[q] = o
 		}
 	}
-
-	e := models.MakeEvent(m, []string{i, k})
+	if len(n.FancyName) == 0 {
+		n.FancyName = utils.MakeFancyName(m)
+	}
+	e := models.MakeEvent(m, n.FancyName, []string{i, k})
 	e.Rotations = rotations
 	e.AddIds(n.Ids)
 	return e
@@ -77,7 +80,6 @@ func readFileToStructs() t {
 	if err != nil {
 		log.Fatalf("cannot unmarshal data: %v", err)
 	}
-
 	return out
 }
 

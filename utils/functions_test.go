@@ -2,10 +2,6 @@ package utils
 
 import (
 	"testing"
-
-	"github.com/karmanyaahm/test_organization/db"
-
-	"github.com/karmanyaahm/test_organization/config"
 )
 
 func TestStruct(t *testing.T) {
@@ -23,16 +19,16 @@ func TestStruct(t *testing.T) {
 
 // }
 
-func TestRotationInfo(t *testing.T) {
-	config.DefaultConfig()
-	db.Reload()
-
-	r := GetEventRotationInfo(db.EventList)
-
-	for i, j := range r {
-		t.Log(i)
-		for k, l := range j {
-			t.Log(k, l)
-		}
-	}
-}
+//func TestRotationInfo(t *testing.T) {
+//	config.DefaultConfig()
+//	db.Reload()
+//
+//	r := GetEventRotationInfo(db.EventList)
+//
+//	for i, j := range r {
+//		t.Log(i)
+//		for k, l := range j {
+//			t.Log(k, l)
+//		}
+//	}
+//}

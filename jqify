@@ -1,0 +1,2 @@
+rclone lsjson schoolDrive:scioly/scioly_tests/testsv3/organized_by_invitational --dirs-only --no-mimetype --original -R | jq '[.[] | label $OUT | .Path=.Path | "https://drive.google.com/drive/folders/\(.ID)" as $ID | .Path | split("/")| .[0] as $DIV |if length == 3 then .[2] else break $OUT end| {Path: ., Div: $DIV, URL: $ID}] '
+

@@ -21,7 +21,7 @@ var randomToZip *flaggy.Subcommand
 var randomToZipSortDir string
 var div string
 
-var sortByEvent *flaggy.Subcommand
+var jsonifyEvents *flaggy.Subcommand
 var disableRotations bool
 
 func init() {
@@ -39,13 +39,12 @@ func init() {
 	randomToZip.AddPositionalValue(&randomToZipSortDir, "SortDir", 1, true, "The Directory to Sort")
 	randomToZip.AddPositionalValue(&div, "Division", 2, true, "b or c")
 
-	sortByEvent = flaggy.NewSubcommand("byEvent")
-	sortByEvent.Description = "Sort tests into per event folders"
-	sortByEvent.AddPositionalValue(&div, "Division", 1, true, "b or c")
-	sortByEvent.Bool(&disableRotations, "", "norotation", "*Disable* rotation sorting (default enabled)")
+	jsonifyEvents = flaggy.NewSubcommand("jsonify")
+	jsonifyEvents.Description = "Sort tests into per event folders"
+	jsonifyEvents.Bool(&disableRotations, "", "norotation", "*Disable* rotation sorting (default enabled)")
 
 	flaggy.AttachSubcommand(randomToZip, 1)
-	flaggy.AttachSubcommand(sortByEvent, 1)
+	flaggy.AttachSubcommand(jsonifyEvents, 1)
 
 	flaggy.SetVersion(version)
 	flaggy.Parse()
@@ -62,17 +61,18 @@ func main() {
 		config.RootPath, _ = filepath.Abs(rootDir)
 	}
 
-	fmt.Println("Event List dir: ", config.DataPath)
-
-	if div == "c" || div == "C" {
-		div = "c"
-	} else if div == "b" || div == "B" {
-		div = "b"
-	} else {
-		flaggy.ShowHelpAndExit("Wrong Division")
-	}
+	println("Event List dir: ", config.DataPath)
 
 	if randomToZip.Used {
+
+		if div == "c" || div == "C" {
+			div = "c"
+		} else if div == "b" || div == "B" {
+			div = "b"
+		} else {
+			flaggy.ShowHelpAndExit("Wrong Division")
+		}
+
 		randomToZipSortDir, err := filepath.Abs(randomToZipSortDir)
 		if err != nil {
 			fmt.Println(err)
@@ -86,11 +86,11 @@ func main() {
 			commands.RandomToZip(randomToZipSortDir, div)
 		}
 
-	} else if sortByEvent.Used {
-		commands.FolderStructureByEvent(div)
-		if !disableRotations {
-			commands.Rotations(div)
-		}
+	} else if jsonifyEvents.Used {
+		commands.JsonifyEvents()
+		//	if !disableRotations {
+		//			commands.Rotations(div)
+		//		}
 	} else {
 		flaggy.ShowHelpAndExit("Unexpected Command")
 	}

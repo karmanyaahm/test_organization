@@ -53,3 +53,5 @@ pathrc
 !tests/**/*.test
 builds/
 
+
+t.json

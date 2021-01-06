@@ -5,6 +5,7 @@ import "strings"
 //Event an event
 type Event struct {
 	Name      string
+	FancyName string
 	Category  []string
 	ids       []string
 	Rotations map[int]string
@@ -33,8 +34,8 @@ func (e *Event) GetIds() []string {
 }
 
 //MakeEvent returns event with the following parameters
-func MakeEvent(name string, category []string) Event {
-	a := Event{Name: name, Category: category}
+func MakeEvent(name, fancyName string, category []string) Event {
+	a := Event{Name: name, FancyName: fancyName, Category: category}
 	a.AddIds([]string{
 		name,
 		strings.Replace(name, "_", " ", -1),

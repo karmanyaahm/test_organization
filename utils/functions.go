@@ -3,6 +3,7 @@ package utils
 import (
 	"errors"
 	"regexp"
+	"strings"
 
 	"github.com/karmanyaahm/test_organization/models"
 )
@@ -51,4 +52,9 @@ func GetEventRotationInfo(eventlist []models.Event) map[string]map[int]string {
 		}
 	}
 	return ans
+}
+
+func MakeFancyName(n string) string {
+	return strings.Title(strings.ReplaceAll(n, "_", " "))
+
 }
