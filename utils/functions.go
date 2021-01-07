@@ -58,3 +58,13 @@ func MakeFancyName(n string) string {
 	return strings.Title(strings.ReplaceAll(n, "_", " "))
 
 }
+
+func FindInviByName(list []models.Invi, name string) (models.Invi, error) {
+	for _, i := range list {
+		if i.Name == name {
+			return i, nil
+		}
+	}
+	return models.Invi{}, errors.New("Not Found")
+
+}

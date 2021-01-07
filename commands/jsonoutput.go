@@ -146,23 +146,32 @@ func JsonifyEvents() {
 	for _, i := range c {
 		split := strings.Split(strings.Split(i.Path, ".")[0], "-")
 
-		location := split[0]
-		year, e := strconv.Atoi(split[1])
+		location, e := utils.FindInviByName(db.InviList, split[0])
 		if e != nil {
-			log.Fatal(e)
+			if e.Error() == "Not Found" {
+			} else {
+				log.Fatal(e)
+			}
 		}
 
+		year, e := strconv.Atoi(split[1])
+		check(e)
+
 		event, e := utils.FindEventByFuzzyName(db.EventList, split[len(split)-2])
-		if e != nil {
-			log.Fatal(e)
-		}
+		check(e)
+
 		name := event.Name
 		if len(event.FancyName) > 0 {
 			name = event.FancyName
 		}
 
-		div := split[len(split)-1]
-		o = append(o, OneVal{URL: i.URL, Location: location, Year: year, Event: name, Div: div})
+		locationName := utils.MakeFancyName(split[0])
+		if len(location.FancyName) > 0 {
+			locationName = location.FancyName
+		}
+
+		div := strings.ToUpper(split[len(split)-1])
+		o = append(o, OneVal{URL: i.URL, Location: locationName, Year: year, Event: name, Div: div})
 	}
 	b, e := json.Marshal(o)
 	if e != nil {
@@ -187,6 +196,11 @@ func JsonifyEvents() {
 	//	}
 	//	fmt.Printf("%s mapped to %s\n", l1, l2)
 
+}
+func check(e error) {
+	if e != nil {
+		log.Fatal(e)
+	}
 }
 
 //func symlinkThings(targetpath string, pathMap map[string]string) {

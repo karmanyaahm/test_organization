@@ -14,12 +14,14 @@ type Config struct {
 var DataPath string
 var RootPath string
 var CallPath string
+var InviPath string
 
 //Conf returns the config
 func Conf() Config {
 	config := Config{Root: "a"}
 	DataPath = "/run/media/karmanyaahm/scioly/oldstff/tests/code/data/event_list.yml"
 	RootPath = "/run/media/karmanyaahm/scioly/oldstff/tests"
+	InviPath = "/run/media/karmanyaahm/scioly/oldstff/tests/code/data/invitationals.yml"
 	CallPath, _ = os.Getwd()
 	return config
 

@@ -14,6 +14,7 @@ import (
 )
 
 var EventList []models.Event
+var InviList []models.Invi
 
 type event struct {
 	FancyName string `yaml:"fancy_name"`
@@ -26,13 +27,22 @@ type t struct {
 	A map[string]map[string]map[string]event `yaml:"categories"`
 }
 
+type invis map[string]struct {
+	Name string
+}
+
 //Reload reloads info
 func Reload() {
 	ans := make([]models.Event, 0, 100)
+	invisList := make([]models.Invi, 0, 100)
 
-	t := readFileToStructs()
+	dataStruct := t{}
+	readFileToStructs(config.DataPath, &dataStruct)
 
-	for i, j := range t.A { //category 1
+	inviStruct := invis{}
+	readFileToStructs(config.InviPath, &inviStruct)
+
+	for i, j := range dataStruct.A { //category 1
 		for k, l := range j { //category 2
 			for m, n := range l { // events in that category
 
@@ -45,10 +55,20 @@ func Reload() {
 			}
 		}
 	}
+
+	for i, j := range inviStruct {
+		fancyName := j.Name
+		if len(fancyName) == 0 {
+			fancyName = utils.MakeFancyName(i)
+		}
+		invisList = append(invisList, models.Invi{Name: i, FancyName: fancyName})
+	}
+
 	EventList = ans
+	InviList = invisList
 
 	if len(EventList) < 1 {
-		panic(errors.New("Event List Reload Failed"))
+		panic(errors.New("List Reload Failed"))
 	}
 }
 
@@ -69,18 +89,17 @@ func parseEvent(i, k, m string, n event) models.Event {
 	return e
 }
 
-func readFileToStructs() t {
-	data, err := ioutil.ReadFile(config.DataPath)
+func readFileToStructs(location string, struc interface{}) {
+	data, err := ioutil.ReadFile(location)
 	if err != nil {
 		panic(errors.New("Wrong Event File Path Configured"))
 	}
-	out := t{}
 
-	err = yaml.Unmarshal(data, &out)
+	err = yaml.Unmarshal(data, struc)
 	if err != nil {
 		log.Fatalf("cannot unmarshal data: %v", err)
 	}
-	return out
+
 }
 
 func insert(arr []models.Event, val models.Event, location int) []models.Event {
