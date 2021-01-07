@@ -40,6 +40,7 @@ func MakeEvent(name, fancyName string, category []string) Event {
 		name,
 		strings.Replace(name, "_", " ", -1),
 		strings.Replace(name, "_", "", -1),
+		strings.Replace(name, "-", "", -1),
 		strings.Replace(name, " ", "", -1),
 	})
 	return a

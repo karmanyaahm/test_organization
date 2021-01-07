@@ -37,7 +37,7 @@ func init() {
 	randomToZip = flaggy.NewSubcommand("randToZip")
 	randomToZip.Description = "Random Files to Zip"
 	randomToZip.AddPositionalValue(&randomToZipSortDir, "SortDir", 1, true, "The Directory to Sort")
-	randomToZip.AddPositionalValue(&div, "Division", 2, true, "b or c")
+	randomToZip.AddPositionalValue(&div, "Division", 2, true, "b or c or bc")
 
 	jsonifyEvents = flaggy.NewSubcommand("jsonify")
 	jsonifyEvents.Description = "Sort tests into per event folders"
@@ -65,10 +65,8 @@ func main() {
 
 	if randomToZip.Used {
 
-		if div == "c" || div == "C" {
-			div = "c"
-		} else if div == "b" || div == "B" {
-			div = "b"
+		div = strings.ToLower(div)
+		if div == "c" || div == "b" || div == "bc" {
 		} else {
 			flaggy.ShowHelpAndExit("Wrong Division")
 		}
