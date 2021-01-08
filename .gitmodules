@@ -1,3 +1,6 @@
 [submodule "data"]
 	path = data
 	url = git@github.com:Beachwood-Science-Olympiad/test_organization-data.git
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/karmanyaahm/scioly-test-frontend.git

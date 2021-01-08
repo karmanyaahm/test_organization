@@ -17,7 +17,7 @@ import (
 )
 
 //RandomToZip random to zip
-func RandomToZip(wd string, div string) error {
+func RandomToZip(wd string) error {
 	cwd, _ := os.Getwd()
 
 	defer os.Chdir(cwd)
@@ -30,20 +30,20 @@ func RandomToZip(wd string, div string) error {
 		db.Reload()
 		notFound := 0
 		//identify events
-		basename := filepath.Base(wd)
+		//basename := filepath.Base(wd)
 
 		rfiles, rdirs := getRootFiles()
 
 		events, notFound1 := identifyFromBases(rdirs)
 		notFound += notFound1
 		for file, event := range events {
-			notFound += renameRootFolder(file, getFolderName(basename, event.Name, div))
+			notFound += renameRootFolder(file, getFolderName(event.Name))
 		}
 
 		events, notFound1 = identifyFromBases(rfiles)
 		notFound += notFound1
 		for file, event := range events {
-			notFound += moveRootFile(file, getFolderName(basename, event.Name, div))
+			notFound += moveRootFile(file, getFolderName(event.Name))
 		}
 		//delete empty dirs
 		if notFound < 1 {
@@ -92,8 +92,8 @@ func moveRootFile(file, fname string) int {
 	}
 	return 0
 }
-func getFolderName(basename, eventname string, div string) string {
-	return fmt.Sprintf("%s-%s-%s.test", basename, eventname, div)
+func getFolderName(eventname string) string {
+	return fmt.Sprintf("%s.test", eventname)
 }
 
 func identifyFromBases(s []string) (ls map[string]models.Event, notFound int) {

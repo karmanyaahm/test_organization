@@ -37,7 +37,6 @@ func TestRandomToZip(t *testing.T) {
 	a, _ := filepath.Abs("../tests/randomToZip/tests-1999")
 	RandomToZip(
 		a,
-		"c",
 	)
 
 	//undo these changes with `rm -rf tests; git restore tests`

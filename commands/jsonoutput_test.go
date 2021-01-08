@@ -12,14 +12,12 @@ func TestByEvent2(t *testing.T) {
 	config.DefaultConfig()
 	config.RootPath, _ = filepath.Abs("../tests/folderStructure/")
 
-	inpSrc = strings.NewReader(`[
- {
-    "Path": "bearso-2021-anatomy_and_physiology-c.test",
-    "URL": "https://drive.google.com/drive/folders/1Dw4ahXRdDrMtmEY4QsKD2K61wERXphXO"
-  },
-  {
-    "Path": "bearso-2021-astronomy-c.test",
-    "URL": "https://drive.google.com/drive/folders/19NUYVtwnzAHe7VU1izmzik6OpgSAUZ68"
+	inpSrc = strings.NewReader(`[ {
+    "Path": "c/2021/bearso/anatomy_and_physiology.test",
+    "ID": "1Dw4ahXRdDrMtmEY4QsKD2K61wERXphXO"
+  },  {
+    "Path": "c/2021/bearso/astronomy.test",
+    "ID": "19NUYVtwnzAHe7VU1izmzik6OpgSAUZ68"
   }
 ]`)
 	JsonifyEvents()
