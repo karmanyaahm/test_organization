@@ -130,8 +130,10 @@ func JsonifyEvents() {
 		log.Fatal(err)
 	}
 	outSrc.Write([]byte(fmt.Sprintf("%v\n", tok)))
+	var prev bool = false
 
 	for dec.More() {
+
 		i := Inp{}
 		dec.Decode(&i)
 		if !strings.HasSuffix(i.Path, ".test") {
@@ -164,10 +166,12 @@ func JsonifyEvents() {
 		}
 
 		div := strings.ToUpper(split[0])
-		enc.Encode(OneVal{URL: config.URLPrefix + i.ID, Location: locationName, Year: year, Event: name, Div: div})
-		if dec.More() {
+
+		if prev {
 			outSrc.Write([]byte(",\n"))
 		}
+		enc.Encode(OneVal{URL: config.URLPrefix + i.ID, Location: locationName, Year: year, Event: name, Div: div})
+		prev = true
 	}
 	// read closing bracket
 	tok, err = dec.Token()
