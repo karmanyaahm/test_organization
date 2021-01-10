@@ -77,7 +77,7 @@ func saveToken(path string, token *oauth2.Token) {
 var srv *sheets.Service
 
 func Initialize() {
-	file, err := pkger.Open("github.com/karmanyaahm/test_organization:/files/credentials.json")
+	file, err := pkger.Open("/files/credentials.json")
 	if err != nil {
 		log.Fatalf("Unable to read client secret file: %v", err)
 	}
