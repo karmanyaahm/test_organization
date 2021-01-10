@@ -10,6 +10,7 @@ all: linux_amd64 linux_arm64 linux_i386 mac_arm64 mac_amd64
 release:
 	$(MAKE) test
 	$(MAKE) clean
+	pkger -o files/
 	$(MAKE) upx all -Otarget
 	$(MAKE) checksum
 testClean:

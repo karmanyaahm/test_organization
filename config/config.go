@@ -16,6 +16,7 @@ var RootPath string
 var CallPath string
 var InviPath string
 var URLPrefix string
+var SpreadsheetID string
 
 //Conf returns the config
 func Conf() Config {
@@ -24,6 +25,7 @@ func Conf() Config {
 	RootPath = "/run/media/karmanyaahm/scioly/oldstff/tests"
 	InviPath = "/run/media/karmanyaahm/scioly/oldstff/tests/code/data/invitationals.yml"
 	URLPrefix = "https://drive.google.com/drive/folders/"
+	SpreadsheetID = "1EI_McY52x9RBUgShYJZFVzeEW4KCsFKS5ByjgUCFkgM"
 	CallPath, _ = os.Getwd()
 	return config
 

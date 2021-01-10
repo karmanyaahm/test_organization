@@ -3,7 +3,6 @@ module github.com/karmanyaahm/test_organization
 go 1.15
 
 require (
-	github.com/andreyvit/diff v0.0.0-20170406064948-c7f18ee00883
 	github.com/bmatcuk/doublestar/v2 v2.0.4
 	github.com/gobuffalo/here v0.6.2 // indirect
 	github.com/integrii/flaggy v1.4.4
