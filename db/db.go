@@ -28,7 +28,9 @@ type t struct {
 }
 
 type invis map[string]struct {
-	Name string
+	Name    string
+	Public  []int
+	Blocked []int
 }
 
 //Reload reloads info
@@ -57,16 +59,12 @@ func Reload() {
 	}
 
 	for i, j := range inviStruct {
-		fancyName := j.Name
-		if len(fancyName) == 0 {
-			fancyName = utils.MakeFancyName(i)
-		}
-		invisList = append(invisList, models.Invi{Name: i, FancyName: fancyName})
+		invisList = append(invisList, models.Invi{Name: i, FancyName: j.Name, Public: j.Public, Blocked: j.Blocked})
 	}
 
 	EventList = ans
 	InviList = invisList
-
+	//fmt.Println(InviList)
 	if len(EventList) < 1 {
 		panic(errors.New("List Reload Failed"))
 	}
